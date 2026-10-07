@@ -1,0 +1,2056 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ETIKA DATA SMART - Belajar Bijak Menggunakan Data</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Google Font: Plus Jakarta Sans -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            },
+            accent: {
+              teal: '#14b8a6',
+              amber: '#f59e0b',
+              emerald: '#10b981',
+              rose: '#f43f5e',
+              purple: '#8b5cf6'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #f8fafc;
+      color: #1e293b;
+      overflow-x: hidden;
+    }
+    
+    .gradient-bg-header {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #2563eb 100%);
+    }
+
+    .card-hover-effect {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card-hover-effect:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 24px -10px rgba(79, 70, 229, 0.25);
+    }
+
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 10px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 10px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.85; transform: scale(1.02); }
+    }
+    .pulse-glow {
+      animation: pulseGlow 3s infinite ease-in-out;
+    }
+
+    .badge-locked {
+      filter: grayscale(100%);
+      opacity: 0.4;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-slate-50 selection:bg-indigo-100 selection:text-indigo-700">
+
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <!-- Logo -->
+        <div class="flex items-center space-x-3 cursor-pointer" onclick="navigateTo('beranda')">
+          <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-md shadow-indigo-200">
+            <i class="fa-solid fa-shield-halved text-xl"></i>
+          </div>
+          <div>
+            <span class="font-extrabold text-lg text-slate-800 tracking-tight block leading-none">ETIKA DATA SMART</span>
+            <span class="text-xs text-indigo-600 font-semibold tracking-wide">Kelas VIII SMP</span>
+          </div>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex space-x-1 lg:space-x-2">
+          <button onclick="navigateTo('beranda')" id="nav-beranda" class="nav-btn px-3 py-2 rounded-lg text-sm font-semibold transition text-slate-600 hover:text-indigo-600 hover:bg-slate-100 flex items-center gap-2">
+            <i class="fa-solid fa-house text-slate-400"></i> Beranda
+          </button>
+          <button onclick="navigateTo('materi')" id="nav-materi" class="nav-btn px-3 py-2 rounded-lg text-sm font-semibold transition text-slate-600 hover:text-indigo-600 hover:bg-slate-100 flex items-center gap-2">
+            <i class="fa-solid fa-book-open text-slate-400"></i> Materi
+          </button>
+          <button onclick="navigateTo('tantangan')" id="nav-tantangan" class="nav-btn px-3 py-2 rounded-lg text-sm font-semibold transition text-slate-600 hover:text-indigo-600 hover:bg-slate-100 flex items-center gap-2">
+            <i class="fa-solid fa-bullseye text-slate-400"></i> Tantangan
+          </button>
+          <button onclick="navigateTo('latihan')" id="nav-latihan" class="nav-btn px-3 py-2 rounded-lg text-sm font-semibold transition text-slate-600 hover:text-indigo-600 hover:bg-slate-100 flex items-center gap-2">
+            <i class="fa-solid fa-pen-to-square text-slate-400"></i> Latihan Soal
+          </button>
+          <button onclick="navigateTo('prestasi')" id="nav-prestasi" class="nav-btn px-3 py-2 rounded-lg text-sm font-semibold transition text-slate-600 hover:text-indigo-600 hover:bg-slate-100 flex items-center gap-2">
+            <i class="fa-solid fa-trophy text-slate-400"></i> Prestasi
+          </button>
+          <button onclick="navigateTo('tentang')" id="nav-tentang" class="nav-btn px-3 py-2 rounded-lg text-sm font-semibold transition text-slate-600 hover:text-indigo-600 hover:bg-slate-100 flex items-center gap-2">
+            <i class="fa-solid fa-circle-info text-slate-400"></i> Tentang
+          </button>
+        </nav>
+
+        <!-- Quick Stats Badge -->
+        <div class="hidden lg:flex items-center gap-3 bg-indigo-50 border border-indigo-100 px-3 py-1.5 rounded-full">
+          <i class="fa-solid fa-star text-amber-500"></i>
+          <span class="text-xs font-bold text-indigo-900" id="header-score-display">Skor: 0</span>
+        </div>
+
+        <!-- Mobile menu button -->
+        <div class="md:hidden flex items-center">
+          <button onclick="toggleMobileMenu()" class="p-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-slate-100 focus:outline-none">
+            <i class="fa-solid fa-bars text-xl" id="mobile-menu-icon"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 bg-white px-4 pt-2 pb-4 space-y-1 shadow-lg">
+      <button onclick="navigateTo('beranda'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-base font-semibold text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 flex items-center gap-3">
+        <i class="fa-solid fa-house text-indigo-500 w-5"></i> Beranda
+      </button>
+      <button onclick="navigateTo('materi'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-base font-semibold text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 flex items-center gap-3">
+        <i class="fa-solid fa-book-open text-indigo-500 w-5"></i> Materi Pembelajaran
+      </button>
+      <button onclick="navigateTo('tantangan'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-base font-semibold text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 flex items-center gap-3">
+        <i class="fa-solid fa-bullseye text-indigo-500 w-5"></i> Tantangan & Mitos
+      </button>
+      <button onclick="navigateTo('latihan'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-base font-semibold text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 flex items-center gap-3">
+        <i class="fa-solid fa-pen-to-square text-indigo-500 w-5"></i> Latihan Soal
+      </button>
+      <button onclick="navigateTo('prestasi'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-base font-semibold text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 flex items-center gap-3">
+        <i class="fa-solid fa-trophy text-indigo-500 w-5"></i> Prestasi & Badge
+      </button>
+      <button onclick="navigateTo('tentang'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-base font-semibold text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 flex items-center gap-3">
+        <i class="fa-solid fa-circle-info text-indigo-500 w-5"></i> Tentang Media
+      </button>
+    </div>
+  </header>
+
+  <section class="bg-indigo-900 text-white py-3 px-4 shadow-inner">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs sm:text-sm">
+      <div class="flex items-center gap-2">
+        <i class="fa-solid fa-chart-line text-indigo-300"></i>
+        <span class="font-medium">Progress Belajar Kamu:</span>
+        <span class="font-bold text-amber-300" id="overall-progress-text">0% Selesai</span>
+      </div>
+      <div class="w-full sm:w-64 bg-indigo-950/80 rounded-full h-3.5 p-0.5 border border-indigo-700">
+        <div id="overall-progress-bar" class="bg-gradient-to-r from-amber-400 to-emerald-400 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+
+    <!-- ==================== SECTION: BERANDA ==================== -->
+    <div id="section-beranda" class="page-view space-y-8">
+      
+      <!-- Hero Banner -->
+      <div class="gradient-bg-header text-white rounded-3xl p-6 sm:p-10 shadow-xl relative overflow-hidden">
+        <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl pointer-events-none">
+          <i class="fa-solid fa-database"></i>
+        </div>
+        <div class="max-w-2xl space-y-4 relative z-10">
+          <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur text-xs font-semibold uppercase tracking-wider text-amber-200 border border-white/20">
+            <i class="fa-solid fa-sparkles"></i> Media Interaktif Informatika
+          </span>
+          <h1 class="text-3xl sm:text-5xl font-black tracking-tight leading-tight">
+            ETIKA DATA SMART
+          </h1>
+          <p class="text-indigo-100 text-lg font-medium">
+            Belajar Bijak Menggunakan Data
+          </p>
+          <p class="text-indigo-100/90 text-sm sm:text-base leading-relaxed pt-2">
+            Yuk belajar bagaimana menggunakan data secara aman, benar, adil, dan bertanggung jawab di dunia digital! Siapkan dirimu menjadi Data Smart Master! 🚀
+          </p>
+          
+          <div class="pt-4 flex flex-wrap gap-3">
+            <button onclick="navigateTo('materi')" class="px-6 py-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-900 font-extrabold shadow-lg shadow-amber-500/20 transition transform hover:-translate-y-0.5 active:translate-y-0 flex items-center gap-2">
+              🚀 MULAI BELAJAR
+            </button>
+            <button onclick="navigateTo('tantangan')" class="px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur text-white font-bold border border-white/30 transition flex items-center gap-2">
+              🎯 TANTANGAN
+            </button>
+            <button onclick="navigateTo('latihan')" class="px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur text-white font-bold border border-white/30 transition flex items-center gap-2">
+              📝 LATIHAN SOAL
+            </button>
+            <button onclick="navigateTo('prestasi')" class="px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur text-white font-bold border border-white/30 transition flex items-center gap-2">
+              🏆 PRESTASI
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Summary Dashboard Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-4">
+          <div class="w-12 h-12 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center text-xl font-bold">
+            <i class="fa-solid fa-book-bookmark"></i>
+          </div>
+          <div>
+            <div class="text-2xl font-black text-slate-800" id="stat-completed-materi">0/7</div>
+            <div class="text-xs text-slate-500 font-medium">Materi Selesai</div>
+          </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-4">
+          <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl font-bold">
+            <i class="fa-solid fa-award"></i>
+          </div>
+          <div>
+            <div class="text-2xl font-black text-slate-800" id="stat-unlocked-badges">0/8</div>
+            <div class="text-xs text-slate-500 font-medium">Badge Diraih</div>
+          </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-4">
+          <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl font-bold">
+            <i class="fa-solid fa-bullseye"></i>
+          </div>
+          <div>
+            <div class="text-2xl font-black text-slate-800" id="stat-mitos-score">0</div>
+            <div class="text-xs text-slate-500 font-medium">Skor Mini Game</div>
+          </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-4">
+          <div class="w-12 h-12 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center text-xl font-bold">
+            <i class="fa-solid fa-graduation-cap"></i>
+          </div>
+          <div>
+            <div class="text-2xl font-black text-slate-800" id="stat-quiz-score">Belum Ada</div>
+            <div class="text-xs text-slate-500 font-medium">Skor Latihan Soal</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature Highlight Overview -->
+      <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+          <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+            <i class="fa-solid fa-compass text-indigo-600"></i> Peta Pembelajaran Etika Data
+          </h2>
+          <span class="text-xs font-semibold px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full">Sesuai Kurikulum SMP</span>
+        </div>
+
+        <p class="text-sm text-slate-600 leading-relaxed">
+          Dalam era digital, data terstruktur (seperti tabel nilai, daftar kontak, atau basis data profil) diolah dengan sangat cepat. Sebagai generasi muda yang cerdas, kamu wajib mematuhi <strong>7 Pilar Etika Data</strong> agar tidak merugikan diri sendiri maupun orang lain.
+        </p>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 pt-2">
+          <button onclick="openMateriModal(1)" class="p-3 rounded-xl bg-slate-50 hover:bg-indigo-50 border border-slate-200 text-center transition">
+            <div class="text-2xl mb-1">🔐</div>
+            <div class="text-xs font-bold text-slate-800">Privasi</div>
+          </button>
+          <button onclick="openMateriModal(2)" class="p-3 rounded-xl bg-slate-50 hover:bg-indigo-50 border border-slate-200 text-center transition">
+            <div class="text-2xl mb-1">✅</div>
+            <div class="text-xs font-bold text-slate-800">Kebenaran</div>
+          </button>
+          <button onclick="openMateriModal(3)" class="p-3 rounded-xl bg-slate-50 hover:bg-indigo-50 border border-slate-200 text-center transition">
+            <div class="text-2xl mb-1">⚖️</div>
+            <div class="text-xs font-bold text-slate-800">Keadilan</div>
+          </button>
+          <button onclick="openMateriModal(4)" class="p-3 rounded-xl bg-slate-50 hover:bg-indigo-50 border border-slate-200 text-center transition">
+            <div class="text-2xl mb-1">🛡️</div>
+            <div class="text-xs font-bold text-slate-800">Akuntabilitas</div>
+          </button>
+          <button onclick="openMateriModal(5)" class="p-3 rounded-xl bg-slate-50 hover:bg-indigo-50 border border-slate-200 text-center transition">
+            <div class="text-2xl mb-1">💬</div>
+            <div class="text-xs font-bold text-slate-800">Sentimen</div>
+          </button>
+          <button onclick="openMateriModal(6)" class="p-3 rounded-xl bg-slate-50 hover:bg-indigo-50 border border-slate-200 text-center transition">
+            <div class="text-2xl mb-1">👤</div>
+            <div class="text-xs font-bold text-slate-800">Profiling</div>
+          </button>
+          <button onclick="openMateriModal(7)" class="p-3 rounded-xl bg-slate-50 hover:bg-indigo-50 border border-slate-200 text-center transition">
+            <div class="text-2xl mb-1">🎭</div>
+            <div class="text-xs font-bold text-slate-800">Deepfakes</div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Graduation Banner Callout -->
+      <div id="graduation-banner" class="hidden bg-gradient-to-r from-amber-500 to-indigo-600 rounded-3xl p-6 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-4">
+          <div class="text-5xl">🎓</div>
+          <div>
+            <h3 class="text-xl font-black">KAMU SUDAH MENJADI DATA SMART!</h3>
+            <p class="text-sm text-indigo-100">Selamat! Kamu telah menyelesaikan seluruh materi dan tantangan etika data.</p>
+          </div>
+        </div>
+        <button onclick="navigateTo('prestasi')" class="px-5 py-2.5 bg-white text-indigo-900 font-extrabold rounded-xl hover:bg-amber-100 transition shadow">
+          Lihat Sertifikat & Badge 🏆
+        </button>
+      </div>
+
+    </div>
+
+    <!-- ==================== SECTION: MATERI PEMBELAJARAN ==================== -->
+    <div id="section-materi" class="page-view hidden space-y-6">
+      <div class="text-center max-w-2xl mx-auto space-y-2">
+        <span class="text-xs font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full uppercase tracking-wider">Modul Pembelajaran</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-800">7 Pilar Etika Penggunaan Data</h2>
+        <p class="text-slate-600 text-sm">Pilih pilar di bawah ini untuk mempelajari teori, contoh konkret, dan langsung ikuti aktivitas interaktifnya!</p>
+      </div>
+
+      <!-- Grid of 7 Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <!-- Card 1: PRIVASI -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-6 card-hover-effect flex flex-col justify-between relative overflow-hidden">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-4xl">🔐</span>
+              <span id="badge-status-1" class="text-xs font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-500">Belum Selesai</span>
+            </div>
+            <h3 class="text-xl font-extrabold text-slate-800">1. PRIVASI DATA</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Menjaga data pribadi seseorang agar tidak digunakan atau disebarkan tanpa izin yang sah.
+            </p>
+          </div>
+          <div class="pt-5 border-t border-slate-100 mt-4">
+            <button onclick="openMateriModal(1)" class="w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold transition flex items-center justify-center gap-2">
+              <span>Pelajari & Aktivitas</span>
+              <i class="fa-solid fa-arrow-right text-xs"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 2: KEBENARAN -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-6 card-hover-effect flex flex-col justify-between relative overflow-hidden">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-4xl">✅</span>
+              <span id="badge-status-2" class="text-xs font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-500">Belum Selesai</span>
+            </div>
+            <h3 class="text-xl font-extrabold text-slate-800">2. KEBENARAN DATA</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Memastikan data yang dikumpulkan dan digunakan akurat, benar, serta tidak dipalsukan.
+            </p>
+          </div>
+          <div class="pt-5 border-t border-slate-100 mt-4">
+            <button onclick="openMateriModal(2)" class="w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold transition flex items-center justify-center gap-2">
+              <span>Pelajari & Aktivitas</span>
+              <i class="fa-solid fa-arrow-right text-xs"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 3: KEADILAN -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-6 card-hover-effect flex flex-col justify-between relative overflow-hidden">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-4xl">⚖️</span>
+              <span id="badge-status-3" class="text-xs font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-500">Belum Selesai</span>
+            </div>
+            <h3 class="text-xl font-extrabold text-slate-800">3. KEADILAN (FAIRNESS)</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Menggunakan data secara adil tanpa diskriminasi atau keberpihakan yang merugikan.
+            </p>
+          </div>
+          <div class="pt-5 border-t border-slate-100 mt-4">
+            <button onclick="openMateriModal(3)" class="w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold transition flex items-center justify-center gap-2">
+              <span>Pelajari & Aktivitas</span>
+              <i class="fa-solid fa-arrow-right text-xs"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 4: AKUNTABILITAS -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-6 card-hover-effect flex flex-col justify-between relative overflow-hidden">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-4xl">🛡️</span>
+              <span id="badge-status-4" class="text-xs font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-500">Belum Selesai</span>
+            </div>
+            <h3 class="text-xl font-extrabold text-slate-800">4. AKUNTABILITAS</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Bertanggung jawab penuh atas pengelolaan, penggunaan, dan keamanan data yang dipegang.
+            </p>
+          </div>
+          <div class="pt-5 border-t border-slate-100 mt-4">
+            <button onclick="openMateriModal(4)" class="w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold transition flex items-center justify-center gap-2">
+              <span>Pelajari & Aktivitas</span>
+              <i class="fa-solid fa-arrow-right text-xs"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 5: ANALISIS SENTIMEN -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-6 card-hover-effect flex flex-col justify-between relative overflow-hidden">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-4xl">💬</span>
+              <span id="badge-status-5" class="text-xs font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-500">Belum Selesai</span>
+            </div>
+            <h3 class="text-xl font-extrabold text-slate-800">5. ANALISIS SENTIMEN</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Menganalisis teks/komentar untuk mengukur opini (positif, negatif, netral) secara etis.
+            </p>
+          </div>
+          <div class="pt-5 border-t border-slate-100 mt-4">
+            <button onclick="openMateriModal(5)" class="w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold transition flex items-center justify-center gap-2">
+              <span>Pelajari & Aktivitas</span>
+              <i class="fa-solid fa-arrow-right text-xs"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 6: PROFILING -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-6 card-hover-effect flex flex-col justify-between relative overflow-hidden">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-4xl">👤</span>
+              <span id="badge-status-6" class="text-xs font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-500">Belum Selesai</span>
+            </div>
+            <h3 class="text-xl font-extrabold text-slate-800">6. PROFILING DATA</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Proses membangun potret preferensi seseorang berdasarkan riwayat aktivitas digitalnya.
+            </p>
+          </div>
+          <div class="pt-5 border-t border-slate-100 mt-4">
+            <button onclick="openMateriModal(6)" class="w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold transition flex items-center justify-center gap-2">
+              <span>Pelajari & Aktivitas</span>
+              <i class="fa-solid fa-arrow-right text-xs"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 7: DEEPFAKES -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-6 card-hover-effect flex flex-col justify-between relative overflow-hidden md:col-span-2 lg:col-span-1">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-4xl">🎭</span>
+              <span id="badge-status-7" class="text-xs font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-500">Belum Selesai</span>
+            </div>
+            <h3 class="text-xl font-extrabold text-slate-800">7. ANCAMAN DEEPFAKES</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Manipulasi media digital menggunakan AI untuk memalsukan wajah/suara seseorang.
+            </p>
+          </div>
+          <div class="pt-5 border-t border-slate-100 mt-4">
+            <button onclick="openMateriModal(7)" class="w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold transition flex items-center justify-center gap-2">
+              <span>Pelajari & Aktivitas</span>
+              <i class="fa-solid fa-arrow-right text-xs"></i>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ==================== SECTION: TANTANGAN (SITUASI & MITOS/FAKTA) ==================== -->
+    <div id="section-tantangan" class="page-view hidden space-y-8">
+      
+      <!-- Sub-navigation tabs for Challenges -->
+      <div class="flex border-b border-slate-200">
+        <button onclick="switchChallengeTab('mitos')" id="tab-btn-mitos" class="py-3 px-6 text-sm font-bold text-indigo-600 border-b-2 border-indigo-600 focus:outline-none flex items-center gap-2">
+          <i class="fa-solid fa-question-circle"></i> Mitos atau Fakta?
+        </button>
+        <button onclick="switchChallengeTab('situasi')" id="tab-btn-situasi" class="py-3 px-6 text-sm font-bold text-slate-500 hover:text-indigo-600 focus:outline-none flex items-center gap-2">
+          <i class="fa-solid fa-compass-drafting"></i> Tantangan Situasi Nyata
+        </button>
+      </div>
+
+      <!-- TAB 1: MITOS ATAU FAKTA -->
+      <div id="challenge-mitos-container" class="space-y-6">
+        <div class="bg-gradient-to-r from-amber-500 to-indigo-600 text-white p-6 rounded-2xl shadow-sm">
+          <div class="flex items-center gap-3">
+            <span class="text-3xl">🤔</span>
+            <div>
+              <h3 class="text-xl font-extrabold">Mini Game: Mitos atau Fakta?</h3>
+              <p class="text-xs text-amber-100">Uji seberapa tajam pemahaman etika datamu terhadap berbagai mitos beredar!</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-6">
+          <div class="flex justify-between items-center text-xs font-bold text-slate-500">
+            <span id="mitos-progress-counter">Soal 1 dari 5</span>
+            <span id="mitos-score-counter" class="text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full">Skor: 0</span>
+          </div>
+
+          <div id="mitos-card-content" class="bg-slate-50 rounded-2xl p-6 border border-slate-200 text-center space-y-4">
+            <div class="text-lg sm:text-xl font-extrabold text-slate-800" id="mitos-statement-text">
+              "Semua data yang ada di internet bebas diambil dan digunakan oleh siapa saja tanpa perlu izin."
+            </div>
+          </div>
+
+          <!-- Choice buttons -->
+          <div id="mitos-buttons" class="grid grid-cols-2 gap-4">
+            <button onclick="submitMitosAnswer('MITOS')" class="py-4 rounded-xl bg-rose-500 hover:bg-rose-600 text-white font-black text-lg transition shadow-md flex items-center justify-center gap-2">
+              ❌ MITOS
+            </button>
+            <button onclick="submitMitosAnswer('FAKTA')" class="py-4 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-black text-lg transition shadow-md flex items-center justify-center gap-2">
+              ✅ FAKTA
+            </button>
+          </div>
+
+          <!-- Result box -->
+          <div id="mitos-feedback-box" class="hidden p-4 rounded-xl border text-sm space-y-2">
+            <!-- Dynamic feedback inserted here -->
+          </div>
+
+          <div id="mitos-next-btn-container" class="hidden text-right">
+            <button onclick="nextMitosQuestion()" class="px-6 py-2.5 rounded-xl bg-indigo-600 text-white font-bold text-sm hover:bg-indigo-700 transition">
+              Lanjut Soal Berikutnya <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: TANTANGAN SITUASI -->
+      <div id="challenge-situasi-container" class="hidden space-y-6">
+        <div class="bg-gradient-to-r from-emerald-600 to-indigo-600 text-white p-6 rounded-2xl shadow-sm">
+          <div class="flex items-center gap-3">
+            <span class="text-3xl">🧭</span>
+            <div>
+              <h3 class="text-xl font-extrabold">Apa Yang Akan Kamu Lakukan?</h3>
+              <p class="text-xs text-emerald-100">Pilih tindakan terbaik saat menghadapi dilema etika data di kehidupan sekolah!</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-6">
+          <div class="flex justify-between items-center text-xs font-bold text-slate-500">
+            <span id="situasi-progress-counter">Situasi 1 dari 5</span>
+          </div>
+
+          <div id="situasi-card-content" class="bg-indigo-50/60 rounded-2xl p-6 border border-indigo-100 space-y-3">
+            <span class="text-xs font-extrabold uppercase px-2.5 py-1 bg-indigo-200 text-indigo-800 rounded-md">Studi Kasus SMP</span>
+            <div class="text-base sm:text-lg font-bold text-slate-800" id="situasi-title">
+              Kamu menemukan file Excel di lab komputer sekolah yang berisi nama lengkap, alamat rumah, dan nomor telepon seluruh teman sekelasmu.
+            </div>
+          </div>
+
+          <!-- Options -->
+          <div id="situasi-options" class="space-y-3">
+            <!-- Dynamically populated -->
+          </div>
+
+          <!-- Feedback / Consequence Box -->
+          <div id="situasi-feedback-box" class="hidden p-5 rounded-xl border text-sm space-y-3">
+            <!-- Consequence and ethic breakdown -->
+          </div>
+
+          <div id="situasi-next-btn-container" class="hidden text-right">
+            <button onclick="nextSituasiQuestion()" class="px-6 py-2.5 rounded-xl bg-indigo-600 text-white font-bold text-sm hover:bg-indigo-700 transition">
+              Situasi Selanjutnya <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ==================== SECTION: LATIHAN SOAL (20 MCQS) ==================== -->
+    <div id="section-latihan" class="page-view hidden space-y-6">
+      
+      <!-- Quiz Header Card -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <span class="text-xs font-bold px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full">Evaluasi Komprehensif</span>
+          <h2 class="text-2xl font-black text-slate-800 mt-1">Latihan Soal Etika Data Smart</h2>
+          <p class="text-xs text-slate-500 mt-1">20 Soal Pilihan Ganda (Mudah, Sedang, Menantang). Pilih jawaban terbaik!</p>
+        </div>
+
+        <div id="quiz-header-status" class="flex items-center gap-4 bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs font-bold text-slate-700">
+          <div><i class="fa-solid fa-list-check text-indigo-600"></i> <span id="quiz-current-num">Soal 1/20</span></div>
+          <div><i class="fa-solid fa-circle-check text-emerald-600"></i> Benar: <span id="quiz-correct-count">0</span></div>
+        </div>
+      </div>
+
+      <!-- Quiz Interactive Card -->
+      <div id="quiz-active-container" class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-6">
+        
+        <!-- Question Text -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold text-indigo-600 uppercase tracking-wider" id="quiz-question-category">Kategori: Privasi Data</span>
+            <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600" id="quiz-question-difficulty">Mudah</span>
+          </div>
+          <p class="text-base sm:text-lg font-extrabold text-slate-800 leading-snug" id="quiz-question-text">
+            Memuat pertanyaan...
+          </p>
+        </div>
+
+        <!-- Options grid -->
+        <div class="grid grid-cols-1 gap-3" id="quiz-options-container">
+          <!-- Option buttons populated by JS -->
+        </div>
+
+        <!-- Feedback Box -->
+        <div id="quiz-feedback-box" class="hidden p-5 rounded-2xl border space-y-2 text-sm transition">
+          <div class="font-extrabold text-base flex items-center gap-2" id="quiz-feedback-title">
+            <!-- Header feedback -->
+          </div>
+          <p class="text-slate-700" id="quiz-feedback-explanation">
+            <!-- Explanation -->
+          </p>
+        </div>
+
+        <!-- Next / Finish Action -->
+        <div class="flex justify-end pt-2">
+          <button id="quiz-next-btn" onclick="nextQuizQuestion()" disabled class="px-6 py-3 rounded-xl bg-slate-200 text-slate-400 font-extrabold text-sm transition cursor-not-allowed flex items-center gap-2">
+            <span>Lanjut Soal Berikutnya</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Quiz Summary / Result Card (Hidden until finished) -->
+      <div id="quiz-summary-container" class="hidden bg-white rounded-3xl border border-slate-200 p-8 shadow-xl text-center space-y-6">
+        <div class="w-20 h-20 bg-amber-100 text-amber-500 rounded-full flex items-center justify-center text-4xl mx-auto shadow-inner">
+          🏆
+        </div>
+        
+        <div class="space-y-2">
+          <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Hasil Latihan Soal</span>
+          <h3 class="text-3xl font-black text-slate-800">🎉 SELAMAT! KAMU SUDAH SELESAI</h3>
+        </div>
+
+        <div class="max-w-md mx-auto bg-slate-50 border border-slate-200 rounded-2xl p-6 space-y-4">
+          <div class="text-4xl font-black text-indigo-600" id="summary-final-score">85/100</div>
+          
+          <div class="grid grid-cols-2 gap-3 text-sm">
+            <div class="bg-emerald-50 border border-emerald-100 p-3 rounded-xl text-emerald-800">
+              <span class="block text-xs text-emerald-600 font-bold">Benar</span>
+              <strong class="text-lg font-black" id="summary-correct-num">17</strong>
+            </div>
+            <div class="bg-rose-50 border border-rose-100 p-3 rounded-xl text-rose-800">
+              <span class="block text-xs text-rose-600 font-bold">Salah</span>
+              <strong class="text-lg font-black" id="summary-wrong-num">3</strong>
+            </div>
+          </div>
+
+          <div class="pt-2 border-t border-slate-200">
+            <span class="text-xs text-slate-500 font-medium">Predikat Kamu:</span>
+            <div class="text-xl font-extrabold text-slate-800 mt-1" id="summary-predicate">
+              🌟 Pintar Menggunakan Data
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap justify-center gap-3 pt-2">
+          <button onclick="restartQuiz()" class="px-6 py-3 rounded-xl bg-indigo-600 text-white font-extrabold hover:bg-indigo-700 transition flex items-center gap-2">
+            <i class="fa-solid fa-rotate-right"></i> ULANGI LATIHAN
+          </button>
+          <button onclick="navigateTo('materi')" class="px-6 py-3 rounded-xl bg-slate-100 text-slate-700 font-extrabold hover:bg-slate-200 transition flex items-center gap-2">
+            <i class="fa-solid fa-book"></i> PELAJARI LAGI
+          </button>
+          <button onclick="navigateTo('beranda')" class="px-6 py-3 rounded-xl bg-slate-100 text-slate-700 font-extrabold hover:bg-slate-200 transition flex items-center gap-2">
+            <i class="fa-solid fa-house"></i> KEMBALI KE MENU
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ==================== SECTION: PRESTASI & BADGES ==================== -->
+    <div id="section-prestasi" class="page-view hidden space-y-6">
+      
+      <div class="text-center max-w-2xl mx-auto space-y-2">
+        <span class="text-xs font-bold text-amber-600 bg-amber-50 px-3 py-1 rounded-full uppercase tracking-wider">Lencana Keahlian</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-800">Papan Prestasi & Badge Etika</h2>
+        <p class="text-slate-600 text-sm">Selesaikan materi dan kuis untuk membuka seluruh 8 Badge Etika Data Smart!</p>
+      </div>
+
+      <!-- Badges Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="badges-grid-container">
+        <!-- Badge Cards rendered by JS -->
+      </div>
+
+      <!-- Progress Summary & Reset button -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          <h4 class="font-bold text-slate-800">Ingin Mengulang Progress Belajar dari Awal?</h4>
+          <p class="text-xs text-slate-500">Seluruh data skor, badge, dan progress di browser ini akan di-reset.</p>
+        </div>
+        <button onclick="resetAllProgress()" class="px-4 py-2.5 rounded-xl border border-rose-200 text-rose-600 hover:bg-rose-50 text-xs font-extrabold transition flex items-center gap-2">
+          <i class="fa-solid fa-trash-can"></i> Reset Progress Belajar
+        </button>
+      </div>
+
+    </div>
+
+    <!-- ==================== SECTION: TENTANG MEDIA ==================== -->
+    <div id="section-tentang" class="page-view hidden space-y-6">
+      
+      <div class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-6">
+        <div class="flex items-center gap-4 border-b border-slate-100 pb-6">
+          <div class="w-16 h-16 rounded-2xl bg-indigo-600 text-white flex items-center justify-center text-3xl shadow-lg shadow-indigo-200">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <div>
+            <h2 class="text-2xl font-black text-slate-800">ETIKA DATA SMART</h2>
+            <p class="text-sm font-semibold text-indigo-600">Media Pembelajaran Interaktif Informatika SMP Kelas VIII</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-slate-600">
+          <div class="space-y-3">
+            <h3 class="font-extrabold text-slate-800 text-base flex items-center gap-2">
+              <i class="fa-solid fa-bullseye text-indigo-600"></i> Tujuan Pembelajaran
+            </h3>
+            <ul class="list-disc list-inside space-y-1.5 text-xs sm:text-sm">
+              <li>Siswa mampu memahami pentingnya menjaga **privasi data pribadi**.</li>
+              <li>Siswa mampu membedakan data yang **akurat (benar)** dan data yang dipalsukan.</li>
+              <li>Siswa bersikap **adil** serta tidak mendiskriminasi berdasarkan data.</li>
+              <li>Siswa memiliki rasa **akuntabilitas (tanggung jawab)** dalam mengelola data.</li>
+              <li>Siswa mampu mengenali **analisis sentimen**, **profiling**, serta bahaya **deepfakes**.</li>
+            </ul>
+          </div>
+
+          <div class="space-y-3">
+            <h3 class="font-extrabold text-slate-800 text-base flex items-center gap-2">
+              <i class="fa-solid fa-chalkboard-user text-indigo-600"></i> Panduan Guru Informatika
+            </h3>
+            <p class="text-xs sm:text-sm leading-relaxed">
+              Media ini dirancang untuk dapat digunakan secara langsung dalam pembelajaran tatap muka di kelas maupun mandiri. Guru dapat membuka materi pilar etika data, mengajak siswa berdiskusi melalui aktivitas interaktif, lalu menguji pemahaman dengan 20 latihan soal komprehensif.
+            </p>
+          </div>
+        </div>
+
+        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-xs text-slate-500 flex flex-wrap justify-between items-center gap-2">
+          <div><i class="fa-solid fa-code"></i> Dibuat dengan HTML5, Tailwind CSS, JS Vanilla</div>
+          <div><i class="fa-solid fa-hard-drive"></i> Menyimpan progress otomatis via LocalStorage</div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- MODAL PEMBELAJARAN DETAIL MATERI -->
+  <div id="materi-modal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white w-full max-w-3xl rounded-3xl shadow-2xl overflow-hidden my-8 max-h-[90vh] flex flex-col transform transition-all">
+      
+      <!-- Modal Header -->
+      <div class="bg-indigo-600 text-white p-6 flex justify-between items-start sticky top-0 z-10">
+        <div class="flex items-center gap-3">
+          <span class="text-4xl" id="modal-icon">🔐</span>
+          <div>
+            <span class="text-xs font-extrabold uppercase tracking-widest text-indigo-200" id="modal-subtitle">PILAR 1</span>
+            <h3 class="text-2xl font-black" id="modal-title">PRIVASI DATA</h3>
+          </div>
+        </div>
+        <button onclick="closeMateriModal()" class="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Modal Content Scrollable -->
+      <div class="p-6 space-y-6 overflow-y-auto custom-scrollbar flex-grow text-sm text-slate-700">
+        
+        <!-- Pengertian Sederhana -->
+        <div class="bg-indigo-50/70 p-5 rounded-2xl border border-indigo-100 space-y-2">
+          <h4 class="font-extrabold text-indigo-900 text-base flex items-center gap-2">
+            <i class="fa-solid fa-lightbulb text-amber-500"></i> Pengertian Sederhana
+          </h4>
+          <p class="text-slate-700 leading-relaxed" id="modal-definition">
+            Privasi data adalah...
+          </p>
+        </div>
+
+        <!-- Contoh Benar & Contoh Salah Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Contoh Benar -->
+          <div class="bg-emerald-50/80 p-4 rounded-2xl border border-emerald-200 space-y-2">
+            <h5 class="font-extrabold text-emerald-800 flex items-center gap-2">
+              <i class="fa-solid fa-circle-check text-emerald-600"></i> Contoh Yang Benar
+            </h5>
+            <ul class="list-disc list-inside space-y-1 text-xs sm:text-sm text-emerald-900" id="modal-correct-examples">
+              <!-- Benar items -->
+            </ul>
+          </div>
+
+          <!-- Contoh Salah -->
+          <div class="bg-rose-50/80 p-4 rounded-2xl border border-rose-200 space-y-2">
+            <h5 class="font-extrabold text-rose-800 flex items-center gap-2">
+              <i class="fa-solid fa-circle-xmark text-rose-600"></i> Contoh Yang Salah
+            </h5>
+            <ul class="list-disc list-inside space-y-1 text-xs sm:text-sm text-rose-900" id="modal-wrong-examples">
+              <!-- Salah items -->
+            </ul>
+          </div>
+        </div>
+
+        <!-- Aktivitas Interaktif khusus materi -->
+        <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-4">
+          <h4 class="font-extrabold text-slate-800 text-base flex items-center gap-2" id="modal-activity-title">
+            <i class="fa-solid fa-gamepad text-indigo-600"></i> Aktivitas Interaktif
+          </h4>
+          <div id="modal-activity-container" class="space-y-4">
+            <!-- Dynamic mini-app per topic -->
+          </div>
+        </div>
+
+        <!-- Pertanyaan Refleksi (Cek Pemahaman) -->
+        <div class="bg-amber-50 p-5 rounded-2xl border border-amber-200 space-y-3">
+          <h4 class="font-extrabold text-amber-900 text-base flex items-center gap-2">
+            <i class="fa-solid fa-brain text-amber-600"></i> Cek Pemahaman & Refleksi
+          </h4>
+          <p class="font-bold text-slate-800" id="modal-reflection-question">
+            Pertanyaan refleksi...
+          </p>
+          <div id="modal-reflection-options" class="space-y-2">
+            <!-- Options populated by JS -->
+          </div>
+          <div id="modal-reflection-feedback" class="hidden p-3 rounded-xl text-xs font-semibold">
+            <!-- Feedback -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-4 bg-slate-50 border-t border-slate-200 flex justify-between items-center sticky bottom-0 z-10">
+        <span class="text-xs font-semibold text-slate-500" id="modal-completion-status">
+          Status: Belum Selesai
+        </span>
+        <button onclick="markMateriComplete()" class="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm transition shadow flex items-center gap-2">
+          <i class="fa-solid fa-check"></i> Saya Mengerti
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-slate-900 text-slate-400 text-xs py-6 border-t border-slate-800 mt-12">
+    <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+      <p class="font-bold text-slate-300">ETIKA DATA SMART &copy; 2026 - Media Pembelajaran Informatika SMP Kelas VIII</p>
+      <p>Belajar Mengolah Data Terstruktur Secara Aman, Benar, Adil, dan Bertanggung Jawab.</p>
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    
+    // State management
+    const state = {
+      completedMateri: [], // IDs [1..7]
+      unlockedBadges: [],  // Badge IDs
+      mitosScore: 0,
+      mitosCurrentIndex: 0,
+      situasiCurrentIndex: 0,
+      quizCurrentIndex: 0,
+      quizAnswers: [], // { questionIndex, selectedOption, isCorrect }
+      quizScore: 0,
+      quizCompleted: false
+    };
+
+    // 7 pillar data detailed definitions
+    const materiData = {
+      1: {
+        id: 1,
+        title: "PRIVASI DATA",
+        subtitle: "PILAR 1",
+        icon: "🔐",
+        badgeId: "badge-privasi",
+        badgeName: "Penjaga Privasi",
+        definition: "Privasi adalah kewajiban untuk menjaga data pribadi seseorang agar tidak digunakan, diakses, atau disebarkan tanpa izin tertulis atau persetujuan yang sah. Contoh data pribadi meliputi: Nama Lengkap, Alamat Rumah, Nomor HP, Foto Pribadi, NIS (Nomor Induk Siswa), Password, dan Lokasi Real-time.",
+        correctExamples: [
+          "Menyimpan password akun belajar secara rahasia.",
+          "Meminta izin teman sebelum mengambil atau membagikan fotonya.",
+          "Menjaga daftar kontak kelas agar tidak tersebar ke luar."
+        ],
+        wrongExamples: [
+          "Membagikan nomor HP teman ke grup umum tanpa izin.",
+          "Menggunakan password milik teman untuk iseng.",
+          "Mengunggah foto kartu pelajar teman ke media sosial."
+        ],
+        reflectionQuestion: "Temanmu mengirimkan nomor telepon seseorang ke grup kelas tanpa izin untuk dijadikan lelucon. Apa tindakan yang paling etis?",
+        reflectionOptions: [
+          { text: "Mengingatkan teman agar tidak membagikan nomor pribadi tanpa izin dan menghapus pesan.", correct: true, explanation: "Tepat! Data pribadi seperti nomor HP wajib dilindungi agar pemiliknya tidak terganggu atau terancam keamanannya." },
+          { text: "Ikut menyebarkan nomor tersebut ke grup ekstrakurikuler.", correct: false, explanation: "Kurang tepat. Menyebarkan nomor orang lain tanpa izin melanggar privasi data pribadi." },
+          { text: "Membiarkan saja karena itu bukan nomor HP milikmu.", correct: false, explanation: "Kurang tepat. Sebagai individu yang paham etika data, kita perlu peduli terhadap perlindungan privasi teman." }
+        ]
+      },
+      2: {
+        id: 2,
+        title: "KEBENARAN DATA",
+        subtitle: "PILAR 2",
+        icon: "✅",
+        badgeId: "badge-kebenaran",
+        badgeName: "Data Checker",
+        definition: "Kebenaran data berarti seluruh data yang dikumpulkan, diolah, dan disajikan harus akurat, jujur, sesuai fakta nyata, dan tidak dimanipulasi/dipalsukan demi keuntungan pribadi atau menyesatkan orang lain.",
+        correctExamples: [
+          "Mencatat nilai ulangan sesuai dengan lembar jawaban asli.",
+          "Memeriksa ulang sumber data statistik sebelum membuat presentasi.",
+          "Mengoreksi data yang keliru setelah menemukan bukti yang sah."
+        ],
+        wrongExamples: [
+          "Mengubah angka hasil survei sekolah agar terlihat lebih menarik.",
+          "Menambah-nambahi jumlah kehadiran siswa pada rekap absensi.",
+          "Menggunakan data palsu untuk memenangkan perlombaan."
+        ],
+        reflectionQuestion: "Mengapa menggunakan data palsu dalam laporan ilmiah sekolah dianggap berbahaya?",
+        reflectionOptions: [
+          { text: "Karena dapat menyebabkan kesimpulan yang salah dan merugikan orang lain.", correct: true, explanation: "Benar sekali! Data yang tidak akurat menghasilkan keputusan atau analisis yang salah total." },
+          { text: "Hanya karena akan ditegur oleh guru.", correct: false, explanation: "Dampak utamanya bukan sekadar teguran, melainkan kerugian akibat keputusan yang didasarkan pada data palsu." },
+          { text: "Tidak berbahaya asalkan tidak ada yang ketahuan.", correct: false, explanation: "Sangat keliru. Kepalsuan data selalu merusak integritas informasi." }
+        ]
+      },
+      3: {
+        id: 3,
+        title: "KEADILAN (FAIRNESS)",
+        subtitle: "PILAR 3",
+        icon: "⚖️",
+        badgeId: "badge-keadilan",
+        badgeName: "Data Fair Player",
+        definition: "Keadilan dalam penggunaan data berarti data harus diolah dan diperlakukan secara adil tanpa ada bias, diskriminasi, atau keberpihakan berdasarkan suku, agama, ras, gender, atau hubungan kekerabatan.",
+        correctExamples: [
+          "Memilih penerima beasiswa berdasarkan urutan kriteria nilai terverifikasi.",
+          "Memberikan kesempatan bertanya yang sama pada survei opini siswa.",
+          "Menggunakan algoritma penilaian yang objektif tanpa memandang latar belakang."
+        ],
+        wrongExamples: [
+          "Memilih ketua kelompok berdasarkan teman dekat meskipun nilainya lebih rendah.",
+          "Mengubah kriteria seleksi secara sepihak untuk meloloskan seseorang.",
+          "Mengkategorikan siswa secara curang berdasarkan daerah asalnya."
+        ],
+        reflectionQuestion: "Sebuah sistem komputer memilih wakil sekolah berdasarkan kriteria nilai tertinggi. Apa yang terjadi jika kriteria itu diubah demi meloloskan sahabat panitia?",
+        reflectionOptions: [
+          { text: "Sistem menjadi tidak adil (bias) dan melanggar prinsip keadilan data.", correct: true, explanation: "Tepat! Penggunaan data harus obyektif dan mematuhi aturan baku yang disepakati." },
+          { text: "Hal itu wajar karena persahabatan lebih penting dari data.", correct: false, explanation: "Salah. Etika data menuntut objektivitas agar semua orang mendapat hak yang adil." }
+        ]
+      },
+      4: {
+        id: 4,
+        title: "AKUNTABILITAS DATA",
+        subtitle: "PILAR 4",
+        icon: "🛡️",
+        badgeId: "badge-akuntabilitas",
+        badgeName: "Data Responsible",
+        definition: "Akuntabilitas artinya pengelola atau pengguna data harus bertanggung jawab penuh atas pengumpulan, keamanan, dan dampak dari pemanfaatan data tersebut. Jika terjadi kebocoran atau kesalahan data, pengelola wajib bertindak jujur dan memperbaiki.",
+        correctExamples: [
+          "Segera melaporkan dan memperbaiki sistem ketika menemukan kebocoran data sekolah.",
+          "Memasang password kuat dan enkripsi pada file berisi data siswa.",
+          "Meminta maaf dan melakukan koreksi jika salah memasukkan data."
+        ],
+        wrongExamples: [
+          "Menyalahkan siswa lain saat database yang dipegang bocor.",
+          "Membiarkan file data pribadi siswa terbuka tanpa sandi di komputer umum.",
+          "Menyembunyikan insiden peretasan data dari pengurus sekolah."
+        ],
+        reflectionQuestion: "Jika kamu tidak sengaja meninggalkan flashdisk berisi data absensi dan nilai kelas di lab komputer, apa tindakan paling bertanggung jawab?",
+        reflectionOptions: [
+          { text: "Segera kembali mengamankannya dan memastikan file tidak disalin pihak tak berwenang.", correct: true, explanation: "Hebat! Ini adalah bentuk nyata tanggung jawab dan akuntabilitas menjaga data." },
+          { text: "Pura-pura tidak tahu dan menyalahkan penjaga lab.", correct: false, explanation: "Ini bentuk tindakan yang menghindari akuntabilitas." }
+        ]
+      },
+      5: {
+        id: 5,
+        title: "ANALISIS SENTIMEN",
+        subtitle: "PILAR 5",
+        icon: "💬",
+        badgeId: "badge-sentimen",
+        badgeName: "Sentiment Detective",
+        definition: "Analisis Sentimen adalah proses mengolah opini, ulasan, atau komentar opini manusia menggunakan teknik pemrosesan bahasa untuk menentukan apakah tanggapan bernilai POSITIF (😊), NEGATIF (😡), atau NETRAL (😐). Dalam etika, analisis sentimen wajib menghormati privasi dan tidak digunakan untuk merundung (cyberbullying).",
+        correctExamples: [
+          "Mengubah komentar saran siswa menjadi evaluasi perbaikan kantin.",
+          "Mengkategorikan ulasan aplikasi sekolah untuk meningkatkan kualitas fitur."
+        ],
+        wrongExamples: [
+          "Menganalisis pesan pribadi siswa tanpa izin untuk menilai kepribadiannya.",
+          "Menggunakan analisis sentimen untuk membius atau memprediksi gosip siswa."
+        ],
+        reflectionQuestion: "Apakah semua komentar media sosial siswa boleh dianalisis oleh siapapun tanpa memperhatikan privasi?",
+        reflectionOptions: [
+          { text: "Tidak boleh. Analisis data publik sekalipun tetap wajib menghormati batas privasi dan tujuan etis.", correct: true, explanation: "Benar! Etika analisis data tetap membutuhkan izin atau anonimitas pemilik data." },
+          { text: "Boleh saja, karena semua tulisan di medsos dianggap milik umum.", correct: false, explanation: "Salah. Hak privasi individu tetap ada walau mengunggah di platform digital." }
+        ]
+      },
+      6: {
+        id: 6,
+        title: "PROFILING DATA",
+        subtitle: "PILAR 6",
+        icon: "👤",
+        badgeId: "badge-profiling",
+        badgeName: "Profile Detective",
+        definition: "Profiling adalah proses merekam dan menganalisis pola perilaku atau aktivitas seseorang (seperti riwayat pencarian, tontonan, atau pembelian) untuk merekonstruksi profil minat, kebiasaan, atau preferensi. Profiling etis memberikan rekomendasi yang berguna tanpa memanipulasi pengguna.",
+        correctExamples: [
+          "Aplikasi perpustakaan merekomendasikan buku berdasarkan riwayat peminjamanmu.",
+          "Aplikasi belajar menampilkan materi matematika yang belum kamu kuasai."
+        ],
+        wrongExamples: [
+          "Mengumpulkan data belanja siswa untuk menjual produk judi online ke mereka.",
+          "Membuat profil diskriminatif yang membatasi akses belajar siswa tertentu."
+        ],
+        reflectionQuestion: "Sistem aplikasi video memberikan rekomendasi tutorial sains karena kamu sering menonton video eksperimen. Apakah ini contoh profiling positif?",
+        reflectionOptions: [
+          { text: "Ya, karena profiling digunakan secara bertanggung jawab untuk mendukung minat belajar.", correct: true, explanation: "Tepat! Profiling bermanfaat selama aman dan transparan." },
+          { text: "Tidak, semua jenis profiling selalu jahat dan berbahaya.", correct: false, explanation: "Kurang tepat. Profiling adalah teknologi netral; penerapannya yang menentukan etis atau tidak." }
+        ]
+      },
+      7: {
+        id: 7,
+        title: "DEEPFAKES & AI MANIPULATION",
+        subtitle: "PILAR 7",
+        icon: "🎭",
+        badgeId: "badge-deepfake",
+        badgeName: "Deepfake Detective",
+        definition: "Deepfake adalah teknik kecerdasan buatan (AI) yang digunakan untuk merekayasa atau memalsukan gambar, suara, atau video seseorang sehingga seolah-olah orang tersebut melakukan/mengucapkan sesuatu yang sebenarnya tidak pernah terjadi.",
+        correctExamples: [
+          "Menggunakan teknologi manipulasi media hanya untuk efek khusus film dengan izin tertulis.",
+          "Memeriksa kebenaran video pejabat/tokoh ke situs berita resmi sebelum menyebarkan."
+        ],
+        wrongExamples: [
+          "Membuat rekaman suara palsu guru yang mengatakan sekolah libur.",
+          "Menempelkan wajah teman ke video yang tidak sopan menggunakan aplikasi AI."
+        ],
+        reflectionQuestion: "Kamu menerima kiriman video di WhatsApp grup yang memperlihatkan kepala sekolah sedang marah-marah dengan gaya tidak wajar. Langkah terbaik adalah...",
+        reflectionOptions: [
+          { text: "Memeriksa keabsahan sumber berita dan tidak menyebarkannya sebelum terverifikasi.", correct: true, explanation: "Sangat cerdas! Hindari jebakan Deepfake dengan selalu verifikasi saring sebelum sharing." },
+          { text: "Membagikan video tersebut langsung ke semua media sosialmu.", correct: false, explanation: "Sangat berbahaya! Kamu bisa ikut menyebarkan hoax buatan AI (Deepfake)." }
+        ]
+      }
+    };
+
+    // Mitos atau Fakta Dataset
+    const mitosDataset = [
+      {
+        statement: "1. Semua data yang ada di internet bebas diambil dan digunakan oleh siapa saja tanpa perlu minta izin.",
+        answer: "MITOS",
+        explanation: "MITOS! Banyak data di internet yang dilindungi oleh hak cipta dan undang-undang privasi data pribadi. Kita tetap membutuhkan izin pengelola."
+      },
+      {
+        statement: "2. Data pribadi seperti nomor HP, alamat rumah, dan NIS harus dijaga kerahasiaannya agar aman.",
+        answer: "FAKTA",
+        explanation: "FAKTA! Membocorkan data pribadi dapat memicu penipuan, peretasan akun, atau kejahatan siber."
+      },
+      {
+        statement: "3. Mengubah nilai siswa di tabel Excel sekolah demi menolong teman tidak apa-apa karena niatnya baik.",
+        answer: "MITOS",
+        explanation: "MITOS! Mengubah data asli adalah bentuk pemalsuan data (melanggar pilar Kebenaran Data) dan merupakan tindakan yang salah."
+      },
+      {
+        statement: "4. Video Deepfake buatan AI selalu 100% tampak asli dan mustahil dibedakan dengan kenyataan.",
+        answer: "MITOS",
+        explanation: "MITOS! Deepfake seringkali memiliki keanehan kecil seperti gerakan mata yang kaku, kedipan abnormal, atau distorsi audio."
+      },
+      {
+        statement: "5. Profiling data pengguna dapat digunakan oleh aplikasi pembelajaran untuk memberikan rekomendasi materi yang pas.",
+        answer: "FAKTA",
+        explanation: "FAKTA! Selama dilakukan secara akuntabel dan transparan, profiling sangat membantu penyesuaian materi belajar."
+      }
+    ];
+
+    // Tantangan Situasi Dataset
+    const situasiDataset = [
+      {
+        id: 1,
+        title: "Kasus 1: File Data Pribadi Tercecer",
+        scenario: "Kamu menemukan file Excel di lab komputer sekolah yang berisi nama lengkap, alamat rumah, NIS, dan nomor HP seluruh siswa kelas VIII.",
+        options: [
+          { label: "A", text: "Mengunggah file tersebut ke grup umum media sosial agar semua teman tahu.", correct: false, consequence: "❌ Kurang Tepat! Tindakan ini melanggar Privasi Data teman-temanmu dan berisiko salah guna oleh pihak jahat." },
+          { label: "B", text: "Melaporkan temuan ini ke guru/petugas lab agar file disimpan di folder aman ber-password.", correct: true, consequence: "🎉 Sangat Bijak! Kamu menerapkan prinsip Akuntabilitas & Privasi Data untuk melindungi teman-temanmu." },
+          { label: "C", text: "Menjual daftar kontak teman ke agen promosi game online.", correct: false, consequence: "❌ Sangat Salah! Menjual data pribadi melanggar hukum dan hukum etika siber." },
+          { label: "D", text: "Mengabaikannya dan membiarkan komputer tetap menyala terbuka.", correct: false, consequence: "💡 Kurang Bertanggung Jawab. Membiarkan file terbuka berisiko diakses orang jahat." }
+        ]
+      },
+      {
+        id: 2,
+        title: "Kasus 2: Manipulasi Data Nilai",
+        scenario: "Saat diberi tugas merekap nilai olahraga kelompok, teman dekatmu meminta kamu menaikkan nilainya dari 70 menjadi 90 agar dia tidak diremudi.",
+        options: [
+          { label: "A", text: "Menuruti permintaannya karena dia adalah sahabat dekatmu.", correct: false, consequence: "❌ Salah. Tindakan ini melanggar Pilar Kebenaran & Keadilan Data." },
+          { label: "B", text: "Tetap mencatat nilai 70 sesuai fakta asli dan menyemangatinya untuk belajar lagi.", correct: true, consequence: "🎉 Hebat! Kamu mempertahankan Kebenaran Data dan bertindak adil kepada teman lain." },
+          { label: "C", text: "Menurunkan nilai anggota kelompok lain agar nilainya seimbang.", correct: false, consequence: "❌ Melanggar keadilan data." },
+          { label: "D", text: "Menghapus nama temanmu dari daftar rekapitulasi.", correct: false, consequence: "❌ Merusak struktur data." }
+        ]
+      },
+      {
+        id: 3,
+        title: "Kasus 3: Seleksi Anggota OSIS",
+        scenario: "Panitia OSIS menggunakan data poin pelanggaran siswa untuk menyeleksi pengurus baru. Panitia ingin meloloskan temannya yang punya poin pelanggaran tinggi dengan cara menghapus data pelanggarannya.",
+        options: [
+          { label: "A", text: "Menolak manipulasi data dan menegaskan seleksi harus sesuai data objektif.", correct: true, consequence: "🎉 Keren! Kamu menjunjung tinggi Keadilan (Fairness) dan integritas data." },
+          { label: "B", text: "Membantu memusnahkan bukti pelanggaran di server.", correct: false, consequence: "❌ Pelanggaran berat etika pengelolaan data terstruktur." },
+          { label: "C", text: "Membiarkan saja asal tidak ketahuan Pembina OSIS.", correct: false, consequence: "❌ Ketidakpedulian merusak sistem keadilan." }
+        ]
+      },
+      {
+        id: 4,
+        title: "Kasus 4: Kebocoran Data Akun Belajar",
+        scenario: "Kamu melihat seorang teman mengetikkan password akun belajar di papan tulis saat presentasi dan lupa menghapusnya.",
+        options: [
+          { label: "A", text: "Memfoto password tersebut lalu membagikannya di story Instagram.", correct: false, consequence: "❌ Melanggar Privasi." },
+          { label: "B", text: "Segera menghapus papan tulis dan mengingatkan temanmu untuk mengganti kata sandi.", correct: true, consequence: "🎉 Luar Biasa! Kamu bertindak sebagai Penjaga Privasi yang tanggap." },
+          { label: "C", text: "Menggunakan akun teman tersebut untuk mengirim pesan iseng.", correct: false, consequence: "❌ Kejahatan penyalahgunaan identitas." }
+        ]
+      },
+      {
+        id: 5,
+        title: "Kasus 5: Video Berita Hoax AI",
+        scenario: "Beredar video viral AI (Deepfake) memperlihatkan ketua pengurus OSIS mengumumkan bahwa seragam sekolah diganti baju bebas. Banyak siswa percaya.",
+        options: [
+          { label: "A", text: "Membantu menyebarkan video itu agar semakin heboh.", correct: false, consequence: "❌ Ikut menyebarkan disinformasi AI." },
+          { label: "B", text: "Menanyakan langsung ke konfirmasi kesiswaan/OSIS dan mengimbau siswa lain tidak terprovokasi.", correct: true, consequence: "🎉 Cerdas! Kamu adalah Deepfake Detective yang kritis!" },
+          { label: "C", text: "Mengedit video tersebut agar tambah lucu.", correct: false, consequence: "❌ Menambah keruhan manipulasi AI." }
+        ]
+      }
+    ];
+
+    // 20 Questions Dataset (Grade 8 SMP)
+    const quiz20Dataset = [
+      // Easy (1-10)
+      {
+        num: 1,
+        category: "Privasi Data",
+        difficulty: "Mudah",
+        question: "Berikut ini yang TERMASUK kategori data pribadi yang wajib dijaga kerahasiaannya adalah...",
+        options: ["A. Jadwal pelajaran sekolah", "B. Alamat rumah dan nomor HP", "C. Nama kepala negara", "D. Daftar menu makanan kantin"],
+        correct: 1,
+        explanation: "Alamat rumah dan nomor HP adalah data pribadi sensitif yang dapat disalahgunakan jika jatuh ke tangan yang salah."
+      },
+      {
+        num: 2,
+        category: "Kebenaran Data",
+        difficulty: "Mudah",
+        question: "Prinsip Kebenaran Data menegaskan bahwa setiap data yang diinput ke dalam tabel harus...",
+        options: ["A. Sesuai keinginan pengedit", "B. Bagus dan menarik saja", "C. Akurat, jujur, dan sesuai fakta", "D. Selalu bernilai tinggi"],
+        correct: 2,
+        explanation: "Data terstruktur yang benar harus akurat, jujur, dan dapat dipertanggungjawabkan keasliannya."
+      },
+      {
+        num: 3,
+        category: "Keadilan Data",
+        difficulty: "Mudah",
+        question: "Menggunakan data secara adil (fairness) berarti...",
+        options: ["A. Memberikan nilai 100 ke semua siswa", "B. Mengolah data tanpa rasa diskriminasi dan keberpihakan", "C. Memilih teman dekat sebagai pemenang lomba", "D. Menyembunyikan data dari publik"],
+        correct: 1,
+        explanation: "Keadilan data memastikan perlakuan yang sama tanpa bias subjek atau favoritisme."
+      },
+      {
+        num: 4,
+        category: "Akuntabilitas Data",
+        difficulty: "Mudah",
+        question: "Siapakah yang harus bertanggung jawab jika terjadi insiden kebocoran data terstruktur di sekolah?",
+        options: ["A. Pengelola dan pengguna data tersebut", "B. Orang yang berada di luar sekolah", "C. Tidak ada yang bertanggung jawab", "D. Semua siswa SD setempat"],
+        correct: 0,
+        explanation: "Pengelola/pemegang data wajib memiliki sifat akuntabilitas atas keamanan data yang dikelolanya."
+      },
+      {
+        num: 5,
+        category: "Analisis Sentimen",
+        difficulty: "Mudah",
+        question: "Kalimat ulasan: 'Aplikasi perpustakaan digital ini sangat cepat dan membantu belajar!' memiliki sentimen...",
+        options: ["A. Negatif", "B. Netral", "C. Positif", "D. Membingungkan"],
+        correct: 2,
+        explanation: "Kalimat tersebut mengandung kata pujian 'sangat cepat dan membantu' yang menunjukkan opini positif."
+      },
+      {
+        num: 6,
+        category: "Profiling Data",
+        difficulty: "Mudah",
+        question: "Proses mengumpulkan riwayat pencarian seseorang untuk memperkirakan minatnya disebut...",
+        options: ["A. Profiling Data", "B. Deepfakes", "C. Hacking", "D. Formatting"],
+        correct: 0,
+        explanation: "Profiling data adalah penyusunan profil preferensi berdasarkan rekam jejak digital pengguna."
+      },
+      {
+        num: 7,
+        category: "Deepfakes",
+        difficulty: "Mudah",
+        question: "Deepfake adalah teknologi buatan AI yang dimanfaatkan untuk...",
+        options: ["A. Memperbaiki kecepatan internet", "B. Memalsukan wajah atau suara seseorang dalam media digital", "C. Menghitung data rumus matematika otomatis", "D. Mencegah kebocoran kata sandi"],
+        correct: 1,
+        explanation: "Deepfake menggunakan AI untuk merekayasa citra wajah atau sampel suara menjadi rekaman tiruan."
+      },
+      {
+        num: 8,
+        category: "Privasi Data",
+        difficulty: "Mudah",
+        question: "Tindakan berikut yang MERUSAK privasi orang lain di dunia digital adalah...",
+        options: ["A. Mengunci smartphone dengan kata sandi", "B. Menyebarkan foto kartu identitas teman ke grup medsos", "C. Menggunakan foto avatar kartun", "D. Meminta izin sebelum memfoto teman"],
+        correct: 1,
+        explanation: "Menyebarkan foto identitas teman melanggar hak privasi data pribadi."
+      },
+      {
+        num: 9,
+        category: "Analisis Sentimen",
+        difficulty: "Mudah",
+        question: "Komentar: 'Saya menggunakan aplikasi ini kemarin sore.' tergolong sentimen...",
+        options: ["A. Positif", "B. Negatif", "C. Netral", "D. Marah"],
+        correct: 2,
+        explanation: "Kalimat tersebut hanya menyampaikan pernyataan fakta tanpa ungkapan senang atau kecewa (netral)."
+      },
+      {
+        num: 10,
+        category: "Kebenaran Data",
+        difficulty: "Mudah",
+        question: "Apa akibat utama jika sebuah basis data rumah sakit memuat golongan darah pasien yang salah?",
+        options: ["A. Pasien mendapat diskon", "B. Terjadi kesalahan penanganan medis yang membahayakan nyawa", "C. Tampilan tabel menjadi kurang rapi", "D. Tidak berdampak apapun"],
+        correct: 1,
+        explanation: "Kesalahan data medis sangat fatal karena keputusan tindakan didasarkan pada data terstruktur tersebut."
+      },
+
+      // Medium (11-17)
+      {
+        num: 11,
+        category: "Privasi & Etika",
+        difficulty: "Sedang",
+        question: "Rian menemukan nomor telepon wali murid di komputer kelas. Sikap Rian yang mematuhi etika data adalah...",
+        options: ["A. Menjadikannya bahan kejahilan kirim pesan misterius", "B. Menutup file dan memberitahu guru agar komputer dikunci", "C. Menyimpan file tersebut di flashdisk pribadi", "D. Membagikan file ke semua nomor kontaknya"],
+        correct: 1,
+        explanation: "Menutup file dan melapor memastikan data pribadi wali murid terlindungi dari akses tanpa hak."
+      },
+      {
+        num: 12,
+        category: "Keadilan Data",
+        difficulty: "Sedang",
+        question: "Sebuah program Beasiswa Prestasi menyeleksi kandidat berdasarkan kriteria poin. Tindakan manakah yang MENJUNJUNG keadilan?",
+        options: ["A. Mengubah bobot poin agar anak panitia menang", "B. Menyeleksi data secara murni sesuai algoritma kriteria terverifikasi", "C. Mengabaikan data siswa yang berasal dari desa", "D. Menghapus data peserta pesaing berat"],
+        correct: 1,
+        explanation: "Menyeleksi murni berdasarkan data objektif menjamin perlakuan yang adil tanpa prasangka."
+      },
+      {
+        num: 13,
+        category: "Profiling Data",
+        difficulty: "Sedang",
+        question: "Kapan aktivitas profiling data pengguna dianggap ETIK dan bermanfaat?",
+        options: ["A. Saat mengarahkan iklan judi pada remaja", "B. Saat memberikan rekomendasi materi belajar sesuai tingkat kemampuan siswa", "C. Saat menjual rekam jejak belanja ke penipu", "D. Saat membatasi akses warga tertentu"],
+        correct: 1,
+        explanation: "Profiling etis bertujuan membantu pengalaman pengguna secara positif dan aman."
+      },
+      {
+        num: 14,
+        category: "Deepfakes",
+        difficulty: "Sedang",
+        question: "Langkah terbaik saat menerima video viral dari sumber tak dikenal yang memperlihatkan hal aneh adalah...",
+        options: ["A. Langsung menyebarkannya ke 5 grup kelas", "B. Melakukan cek fakta ke situs/sumber resmi sebelum mempercayainya", "C. Mengubah judul video agar semakin menghebohkan", "D. Langsung mempercayainya karena video tidak mungkin bohong"],
+        correct: 1,
+        explanation: "Saring sebelum sharing adalah prinsip utama dalam membendung kebohongan berbasis Deepfake/AI."
+      },
+      {
+        num: 15,
+        category: "Akuntabilitas Data",
+        difficulty: "Sedang",
+        question: "Pengurus perpustakaan mendapati sistemnya diretas sehingga data peminjam bocor. Bentuk akuntabilitas yang BENAR adalah...",
+        options: ["A. Mengumumkan insiden, meminta maaf, dan segera memperbaiki celah keamanan", "B. Menyalahkan para peminjam buku", "C. Pura-pura tidak tahu dan menyembunyikan kejadian", "D. Mengapus seluruh sistem perpustakaan"],
+        correct: 0,
+        explanation: "Akuntabilitas mengharuskan keterbukaan, penanganan cepat, serta pembenahan keamanan."
+      },
+      {
+        num: 16,
+        category: "Analisis Sentimen",
+        difficulty: "Sedang",
+        question: "Mengapa analisis sentimen pada media sosial siswa tidak boleh dilakukan secara sewenang-wenang?",
+        options: ["A. Karena komputer tidak bisa membaca tulisan", "B. Karena harus menghormati privasi dan menghindarkan penyalahgunaan data pribadi", "C. Karena harga komputer sangat mahal", "D. Karena semua ulasan bernilai sama"],
+        correct: 1,
+        explanation: "Setiap analisis data opini publik harus mempertimbangkan etika privasi serta perlindungan subjek data."
+      },
+      {
+        num: 17,
+        category: "Kebenaran Data",
+        difficulty: "Sedang",
+        question: "Istilah 'Garbage In, Garbage Out' dalam pemrosesan data terstruktur memiliki arti...",
+        options: ["A. Jika input data salah/palsu, maka output dan kesimpulannya pun akan salah", "B. Komputer harus dibuang ke tempat sampah jika rusak", "C. Data harus dibersihkan menggunakan pembersih kaca", "D. Hanya sampah yang boleh dijadikan data"],
+        correct: 0,
+        explanation: "Prinsip ini menegaskan pentingnya Kebenaran Data di awal proses agar hasilnya tidak sesat."
+      },
+
+      // Challenging (18-20)
+      {
+        num: 18,
+        category: "Integrasi Etika",
+        difficulty: "Sangat Menantang",
+        question: "Manakah skenario gabungan antara pelanggaran PRIVASI dan pelanggaran KEBENARAN data?",
+        options: [
+          "A. Menyimpan password sendiri di catatan rahasia",
+          "B. Mengubah nilai ulangan teman tanpa izin lalu mengunggahnya ke media sosial publik",
+          "C. Membantu guru merapikan tata letak baris tabel nilai",
+          "D. Membaca artikel tentang keamanan siber bersama-sama"
+        ],
+        correct: 1,
+        explanation: "Mengubah nilai melanggar Kebenaran Data, sedangkan mengunggahnya tanpa izin melanggar Privasi."
+      },
+      {
+        num: 19,
+        category: "Analisis Etika Kompleks",
+        difficulty: "Sangat Menantang",
+        question: "Sebuah platform edutech mengumpulkan data waktu belajar siswa untuk menampilkan grafik perkembangan. Mengapa ini tergolong etis?",
+        options: [
+          "A. Karena platform menjual data tersebut ke perusahaan iklan luar negeri",
+          "B. Karena pengumpulan data transparan, relevan untuk pembelajaran, dan aman",
+          "C. Karena data tersebut ditampilkan di papan reklame kota",
+          "D. Karena siswa tidak memiliki hak atas datanya"
+        ],
+        correct: 1,
+        explanation: "Penggunaan data terstruktur etis mensyaratkan transparansi, relevansi tujuan, dan keamanan terjamin."
+      },
+      {
+        num: 20,
+        category: "Pencegahan Rekayasa AI",
+        difficulty: "Sangat Menantang",
+        question: "Bagaimana cara efektif melindungi data foto pribadi kita agar tidak mudah disalahgunakan oleh pembuat Deepfake AI?",
+        options: [
+          "A. Mengunggah ribuan foto resolusi tinggi ke semua forum umum",
+          "B. Membatasi privasi akun media sosial dan tidak sembarangan membagikan foto pribadi beresolusi tinggi di publik",
+          "C. Menghapus seluruh jaringan listrik rumah",
+          "D. Menjual perangkat hp ke pasar gelap"
+        ],
+        correct: 1,
+        explanation: "Membatasi paparan foto resolusi tinggi di ranah publik meminimalisir bahan sampel sintesis AI pembuat Deepfake."
+      }
+    ];
+
+    
+    // Load state from LocalStorage on load
+    function initLocalStorage() {
+      try {
+        const saved = localStorage.getItem('etika_data_smart_state');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          state.completedMateri = parsed.completedMateri || [];
+          state.unlockedBadges = parsed.unlockedBadges || [];
+          state.mitosScore = parsed.mitosScore || 0;
+          state.quizScore = parsed.quizScore || 0;
+          state.quizCompleted = parsed.quizCompleted || false;
+        }
+      } catch (e) {
+        console.error("LocalStorage load error:", e);
+      }
+      updateUIState();
+    }
+
+    function saveLocalStorage() {
+      try {
+        localStorage.setItem('etika_data_smart_state', JSON.stringify({
+          completedMateri: state.completedMateri,
+          unlockedBadges: state.unlockedBadges,
+          mitosScore: state.mitosScore,
+          quizScore: state.quizScore,
+          quizCompleted: state.quizCompleted
+        }));
+      } catch (e) {
+        console.error("LocalStorage save error:", e);
+      }
+      updateUIState();
+    }
+
+    // Refresh overall dashboard, progress bar, badges
+    function updateUIState() {
+      // 1. Overall Progress Calculation
+      // Materi (7 items) = 70%, Quiz = 20%, Mitos Game = 10%
+      const materiProg = (state.completedMateri.length / 7) * 70;
+      const quizProg = state.quizCompleted ? 20 : 0;
+      const mitosProg = (state.mitosScore / 25) * 10;
+      const totalProg = Math.min(100, Math.round(materiProg + quizProg + mitosProg));
+
+      document.getElementById('overall-progress-text').innerText = `${totalProg}% Selesai`;
+      document.getElementById('overall-progress-bar').style.width = `${totalProg}%`;
+
+      // Stats on Beranda
+      document.getElementById('stat-completed-materi').innerText = `${state.completedMateri.length}/7`;
+      document.getElementById('stat-unlocked-badges').innerText = `${state.unlockedBadges.length}/8`;
+      document.getElementById('stat-mitos-score').innerText = state.mitosScore;
+      document.getElementById('header-score-display').innerText = `Skor: ${state.quizCompleted ? state.quizScore : state.mitosScore}`;
+
+      if (state.quizCompleted) {
+        document.getElementById('stat-quiz-score').innerText = `${state.quizScore}/100`;
+      } else {
+        document.getElementById('stat-quiz-score').innerText = `Belum Ada`;
+      }
+
+      // Check for graduation
+      if (state.completedMateri.length === 7 && state.quizCompleted && state.quizScore >= 80) {
+        document.getElementById('graduation-banner').classList.remove('hidden');
+        unlockBadge('badge-master', 'DATA ETHICS MASTER');
+      }
+
+      // Update Materi Card Status badges
+      for (let i = 1; i <= 7; i++) {
+        const badgeElem = document.getElementById(`badge-status-${i}`);
+        if (badgeElem) {
+          if (state.completedMateri.includes(i)) {
+            badgeElem.className = "text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700";
+            badgeElem.innerText = "Selesai ✓";
+          } else {
+            badgeElem.className = "text-xs font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-500";
+            badgeElem.innerText = "Belum Selesai";
+          }
+        }
+      }
+
+      // Render Badges grid
+      renderBadgesGrid();
+    }
+
+    
+    function navigateTo(sectionId) {
+      // Hide all page views
+      const views = document.querySelectorAll('.page-view');
+      views.forEach(v => v.classList.add('hidden'));
+
+      // Show target
+      const target = document.getElementById(`section-${sectionId}`);
+      if (target) {
+        target.classList.remove('hidden');
+      }
+
+      // Update Nav active style
+      const navBtns = document.querySelectorAll('.nav-btn');
+      navBtns.forEach(btn => {
+        btn.classList.remove('text-indigo-600', 'bg-indigo-50');
+        btn.classList.add('text-slate-600');
+      });
+
+      const activeNav = document.getElementById(`nav-${sectionId}`);
+      if (activeNav) {
+        activeNav.classList.add('text-indigo-600', 'bg-indigo-50');
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    }
+
+    
+    let currentModalMateriId = null;
+
+    function openMateriModal(id) {
+      currentModalMateriId = id;
+      const data = materiData[id];
+      if (!data) return;
+
+      document.getElementById('modal-icon').innerText = data.icon;
+      document.getElementById('modal-subtitle').innerText = data.subtitle;
+      document.getElementById('modal-title').innerText = data.title;
+      document.getElementById('modal-definition').innerText = data.definition;
+
+      // Render examples
+      const correctList = document.getElementById('modal-correct-examples');
+      correctList.innerHTML = data.correctExamples.map(item => `<li>${item}</li>`).join('');
+
+      const wrongList = document.getElementById('modal-wrong-examples');
+      wrongList.innerHTML = data.wrongExamples.map(item => `<li>${item}</li>`).join('');
+
+      // Build interactive activity based on topic
+      buildTopicActivity(id);
+
+      // Reflection question setup
+      document.getElementById('modal-reflection-question').innerText = data.reflectionQuestion;
+      const refOptions = document.getElementById('modal-reflection-options');
+      const refFeedback = document.getElementById('modal-reflection-feedback');
+      refFeedback.classList.add('hidden');
+
+      refOptions.innerHTML = data.reflectionOptions.map((opt, idx) => `
+        <button onclick="answerReflection(${id}, ${idx})" class="w-full text-left p-3 rounded-xl border border-amber-200 bg-white hover:bg-amber-100/50 font-semibold text-xs sm:text-sm text-slate-800 transition">
+          ${opt.text}
+        </button>
+      `).join('');
+
+      // Completion status
+      const isCompleted = state.completedMateri.includes(id);
+      const statusText = document.getElementById('modal-completion-status');
+      statusText.innerText = isCompleted ? "Status: Selesai ✓" : "Status: Belum Selesai";
+      statusText.className = isCompleted ? "text-xs font-bold text-emerald-600" : "text-xs font-semibold text-slate-500";
+
+      document.getElementById('materi-modal').classList.remove('hidden');
+    }
+
+    function closeMateriModal() {
+      document.getElementById('materi-modal').classList.add('hidden');
+    }
+
+    // Dynamic Mini-Activities for each Materi
+    function buildTopicActivity(id) {
+      const container = document.getElementById('modal-activity-container');
+      const title = document.getElementById('modal-activity-title');
+
+      if (id === 1) { // PRIVASI: BOLEH ATAU TIDAK?
+        title.innerHTML = `<i class="fa-solid fa-hand text-indigo-600"></i> Aktivitas: BOLEH ATAU TIDAK?`;
+        container.innerHTML = `
+          <div class="space-y-3">
+            <p class="text-xs text-slate-600">Tentukan apakah situasi penggunaan data pribadi berikut BOLEH atau TIDAK BOLEH dilakukan:</p>
+            
+            <div class="space-y-2">
+              <div class="p-3 bg-white border border-slate-200 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+                <span class="text-xs font-bold">1. Membagikan nomor HP teman ke grup tanpa izin.</span>
+                <div class="flex gap-2">
+                  <button onclick="checkPrivasiAct(1, false, this)" class="px-3 py-1 bg-rose-100 text-rose-700 text-xs font-bold rounded-lg hover:bg-rose-200">TIDAK BOLEH</button>
+                  <button onclick="checkPrivasiAct(1, true, this)" class="px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold rounded-lg hover:bg-emerald-200">BOLEH</button>
+                </div>
+              </div>
+
+              <div class="p-3 bg-white border border-slate-200 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+                <span class="text-xs font-bold">2. Menyimpan data siswa di server sekolah untuk keperluan belajar.</span>
+                <div class="flex gap-2">
+                  <button onclick="checkPrivasiAct(2, false, this)" class="px-3 py-1 bg-rose-100 text-rose-700 text-xs font-bold rounded-lg hover:bg-rose-200">TIDAK BOLEH</button>
+                  <button onclick="checkPrivasiAct(2, true, this)" class="px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold rounded-lg hover:bg-emerald-200">BOLEH</button>
+                </div>
+              </div>
+
+              <div class="p-3 bg-white border border-slate-200 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+                <span class="text-xs font-bold">3. Membagikan password akun teman untuk dijadikan lelucon.</span>
+                <div class="flex gap-2">
+                  <button onclick="checkPrivasiAct(3, false, this)" class="px-3 py-1 bg-rose-100 text-rose-700 text-xs font-bold rounded-lg hover:bg-rose-200">TIDAK BOLEH</button>
+                  <button onclick="checkPrivasiAct(3, true, this)" class="px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold rounded-lg hover:bg-emerald-200">BOLEH</button>
+                </div>
+              </div>
+            </div>
+            <div id="act1-feedback" class="text-xs font-bold p-2 rounded-lg hidden"></div>
+          </div>
+        `;
+      } else if (id === 2) { // KEBENARAN: PERBAIKI DATA!
+        title.innerHTML = `<i class="fa-solid fa-wrench text-indigo-600"></i> Aktivitas: PERBAIKI DATA!`;
+        container.innerHTML = `
+          <div class="space-y-3">
+            <p class="text-xs text-slate-600">Perhatikan tabel nilai terstruktur berikut:</p>
+            <table class="w-full text-xs text-left border border-slate-200 rounded-lg overflow-hidden">
+              <thead class="bg-indigo-100 font-bold">
+                <tr><th class="p-2 border-b">Nama Siswa</th><th class="p-2 border-b">Nilai Tercatat</th></tr>
+              </thead>
+              <tbody>
+                <tr class="border-b"><td class="p-2">Andi</td><td class="p-2">85</td></tr>
+                <tr class="border-b"><td class="p-2">Budi</td><td class="p-2">90</td></tr>
+                <tr class="bg-amber-50 font-bold"><td class="p-2">Citra</td><td class="p-2 text-rose-600">75 (Salah)</td></tr>
+              </tbody>
+            </table>
+            <div class="p-3 bg-amber-100/60 rounded-xl text-xs space-y-2">
+              <strong>Masalah:</strong> Nilai Citra sebenarnya adalah <strong>85</strong>, tetapi tabel mencatat <strong>75</strong>. Apa langkah paling etis?
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+                <button onclick="checkKebenaranAct(false, 'A')" class="p-2 bg-white rounded border hover:bg-slate-100 text-left">A. Membiarkannya begitu saja</button>
+                <button onclick="checkKebenaranAct(true, 'B')" class="p-2 bg-white rounded border hover:bg-emerald-50 text-left text-emerald-800 font-bold">B. Mengubah menjadi data yang benar (85)</button>
+                <button onclick="checkKebenaranAct(false, 'C')" class="p-2 bg-white rounded border hover:bg-slate-100 text-left">C. Menghapus nama Citra dari tabel</button>
+                <button onclick="checkKebenaranAct(false, 'D')" class="p-2 bg-white rounded border hover:bg-slate-100 text-left">D. Mengganti nilai secara sembarangan</button>
+              </div>
+            </div>
+            <div id="act2-feedback" class="text-xs font-bold p-2 rounded-lg hidden"></div>
+          </div>
+        `;
+      } else if (id === 3) { // KEADILAN: SIAPA YANG TERPILIH?
+        title.innerHTML = `<i class="fa-solid fa-scale-balanced text-indigo-600"></i> Aktivitas: SIAPA YANG TERPILIH?`;
+        container.innerHTML = `
+          <div class="space-y-3">
+            <p class="text-xs text-slate-600">Aturan Seleksi: <strong>"Peserta dipilih berdasarkan nilai rata-rata tertinggi."</strong></p>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs">
+              <div class="p-2 bg-white border rounded-xl"><strong>Dion:</strong> 92</div>
+              <div class="p-2 bg-white border rounded-xl"><strong>Rani:</strong> 88</div>
+              <div class="p-2 bg-white border rounded-xl"><strong>Siti:</strong> 80</div>
+              <div class="p-2 bg-white border rounded-xl"><strong>Bayu (Teman Dekat):</strong> 75</div>
+            </div>
+            <p class="text-xs font-bold">Siapa yang seharusnya terpilih menurut aturan data?</p>
+            <div class="flex flex-wrap gap-2">
+              <button onclick="checkKeadilanAct('Dion', true)" class="px-4 py-2 bg-indigo-600 text-white rounded-xl text-xs font-bold hover:bg-indigo-700">Dion (92)</button>
+              <button onclick="checkKeadilanAct('Bayu', false)" class="px-4 py-2 bg-slate-200 text-slate-700 rounded-xl text-xs font-bold hover:bg-slate-300">Bayu (75)</button>
+            </div>
+            <div id="act3-feedback" class="text-xs font-bold p-2 rounded-lg hidden"></div>
+          </div>
+        `;
+      } else if (id === 4) { // AKUNTABILITAS
+        title.innerHTML = `<i class="fa-solid fa-shield text-indigo-600"></i> Aktivitas: SIAPA YANG BERTANGGUNG JAWAB?`;
+        container.innerHTML = `
+          <div class="space-y-3 text-xs">
+            <p><strong>Situasi:</strong> Sebuah sekolah menyimpan data pribadi siswa. Tiba-tiba data tersebut bocor dan dapat dilihat oleh publik di internet. Apa tindakan akuntabel sekolah?</p>
+            <div class="space-y-1.5">
+              <button onclick="checkAkuntabilitasAct(false)" class="w-full text-left p-2 bg-white border rounded-lg">A. Membiarkan saja dan menyalahkan siswa</button>
+              <button onclick="checkAkuntabilitasAct(true)" class="w-full text-left p-2 bg-emerald-50 border border-emerald-200 text-emerald-900 font-bold rounded-lg">B. Melaporkan masalah, meminta maaf, dan segera menutup celah keamanan data</button>
+              <button onclick="checkAkuntabilitasAct(false)" class="w-full text-left p-2 bg-white border rounded-lg">C. Menyebarkan data tersebut ke sekolah lain</button>
+            </div>
+            <div id="act4-feedback" class="text-xs font-bold p-2 rounded-lg hidden"></div>
+          </div>
+        `;
+      } else if (id === 5) { // ANALISIS SENTIMEN
+        title.innerHTML = `<i class="fa-solid fa-comments text-indigo-600"></i> Aktivitas: TEBAK SENTIMEN`;
+        container.innerHTML = `
+          <div class="space-y-3 text-xs">
+            <p>Klasifikasikan komentar berikut:</p>
+            <div class="p-3 bg-white border rounded-xl space-y-2">
+              <p class="font-bold text-slate-800">"Aplikasinya sangat bagus dan mudah digunakan!"</p>
+              <div class="flex gap-2">
+                <button onclick="checkSentimenAct('POSITIF', true)" class="px-3 py-1 bg-emerald-100 text-emerald-800 rounded font-bold">😊 POSITIF</button>
+                <button onclick="checkSentimenAct('NEGATIF', false)" class="px-3 py-1 bg-rose-100 text-rose-800 rounded font-bold">😡 NEGATIF</button>
+                <button onclick="checkSentimenAct('NETRAL', false)" class="px-3 py-1 bg-slate-100 text-slate-800 rounded font-bold">😐 NETRAL</button>
+              </div>
+            </div>
+            <div id="act5-feedback" class="text-xs font-bold p-2 rounded-lg hidden"></div>
+          </div>
+        `;
+      } else if (id === 6) { // PROFILING
+        title.innerHTML = `<i class="fa-solid fa-user-gear text-indigo-600"></i> Aktivitas: TEBAK PROFIL`;
+        container.innerHTML = `
+          <div class="space-y-3 text-xs">
+            <p><strong>Data Aktivitas Seseorang:</strong></p>
+            <ul class="list-disc list-inside bg-slate-100 p-2.5 rounded-lg text-slate-700">
+              <li>Sering menonton video resep memasak</li>
+              <li>Mencari toko bahan kue terdekat</li>
+              <li>Menyimpan resep kue bolu di aplikasi</li>
+            </ul>
+            <p class="font-bold">Berdasarkan data profiling tersebut, apa kemungkinan hobi orang tersebut?</p>
+            <div class="flex flex-wrap gap-2">
+              <button onclick="checkProfilingAct(true)" class="px-3 py-2 bg-indigo-600 text-white font-bold rounded-xl">🍳 Memasak / Tata Boga</button>
+              <button onclick="checkProfilingAct(false)" class="px-3 py-2 bg-slate-200 text-slate-700 font-bold rounded-xl">⚽ Sepak Bola</button>
+            </div>
+            <div id="act6-feedback" class="text-xs font-bold p-2 rounded-lg hidden"></div>
+          </div>
+        `;
+      } else if (id === 7) { // DEEPFAKES
+        title.innerHTML = `<i class="fa-solid fa-masks-theater text-indigo-600"></i> Aktivitas: ASLI ATAU PERLU DICEK?`;
+        container.innerHTML = `
+          <div class="space-y-3 text-xs">
+            <p><strong>Situasi:</strong> Kamu menerima video mengejutkan di medsos yang menampilkan temanmu berpidato kasar. Wajahnya agak kaku dan suaranya seperti buatan robot.</p>
+            <div class="space-y-1.5">
+              <button onclick="checkDeepfakeAct(false)" class="w-full text-left p-2 bg-white border rounded-lg">A. Langsung menyebarkan ke semua kontak</button>
+              <button onclick="checkDeepfakeAct(true)" class="w-full text-left p-2 bg-emerald-50 border border-emerald-200 text-emerald-900 font-bold rounded-lg">B. Memeriksa kebenaran sumber dan tidak menyebarkan sembarangan</button>
+            </div>
+            <div id="act7-feedback" class="text-xs font-bold p-2 rounded-lg hidden"></div>
+          </div>
+        `;
+      }
+    }
+
+    // Handlers for mini activity responses
+    function checkPrivasiAct(num, val, btn) {
+      const fb = document.getElementById('act1-feedback');
+      fb.classList.remove('hidden');
+      if ((num === 1 && !val) || (num === 2 && val) || (num === 3 && !val)) {
+        fb.className = "text-xs font-bold p-2 rounded-lg bg-emerald-100 text-emerald-800";
+        fb.innerText = "🎉 Benar! Pilihanmu sesuai etika perlindungan privasi data.";
+      } else {
+        fb.className = "text-xs font-bold p-2 rounded-lg bg-rose-100 text-rose-800";
+        fb.innerText = "💡 Belum tepat. Ingat bahwa data pribadi wajib dilindungi kecuali untuk kepentingan resmi yang sah.";
+      }
+    }
+
+    function checkKebenaranAct(isCorrect, letter) {
+      const fb = document.getElementById('act2-feedback');
+      fb.classList.remove('hidden');
+      if (isCorrect) {
+        fb.className = "text-xs font-bold p-2 rounded-lg bg-emerald-100 text-emerald-800";
+        fb.innerText = "🎉 Tepat! Mengubah data ke angka fakta asli (85) mematuhi integritas Kebenaran Data.";
+      } else {
+        fb.className = "text-xs font-bold p-2 rounded-lg bg-rose-100 text-rose-800";
+        fb.innerText = "💡 Belum tepat. Membiarkan atau memalsukan data merusak kebenaran informasi.";
+      }
+    }
+
+    function checkKeadilanAct(name, isCorrect) {
+      const fb = document.getElementById('act3-feedback');
+      fb.classList.remove('hidden');
+      if (isCorrect) {
+        fb.className = "text-xs font-bold p-2 rounded-lg bg-emerald-100 text-emerald-800";
+        fb.innerText = "🎉 Tepat! Dion terpilih karena nilainya tertinggi (92) sesuai aturan obyektif.";
+      } else {
+        fb.className = "text-xs font-bold p-2 rounded-lg bg-rose-100 text-rose-800";
+        fb.innerText = "💡 Belum tepat. Memilih Bayu hanya karena teman dekat melanggar prinsip keadilan data.";
+      }
+    }
+
+    function checkAkuntabilitasAct(isCorrect) {
+      const fb = document.getElementById('act4-feedback');
+      fb.classList.remove('hidden');
+      if (isCorrect) {
+        fb.className = "text-xs font-bold p-2 rounded-lg bg-emerald-100 text-emerald-800";
+        fb.innerText = "🎉 Tepat! Pengelola wajib jujur, bertanggung jawab, dan memperbaiki celah keamanan.";
+      } else {
+        fb.className = "text-xs font-bold p-2 rounded-lg bg-rose-100 text-rose-800";
+        fb.innerText = "💡 Belum tepat. Menolak tanggung jawab merusak akuntabilitas data.";
+      }
+    }
+
+    function checkSentimenAct(type, isCorrect) {
+      const fb = document.getElementById('act5-feedback');
+      fb.classList.remove('hidden');
+      if (isCorrect) {
+        fb.className = "text-xs font-bold p-2 rounded-lg bg-emerald-100 text-emerald-800";
+        fb.innerText = "🎉 Benar! Komentar tersebut merupakan sentimen POSITIF.";
+      } else {
+        fb.className = "text-xs font-bold p-2 rounded-lg bg-rose-100 text-rose-800";
+        fb.innerText = "💡 Belum tepat. Komentar memuat ungkapan pujian 'sangat bagus' (POSITIF).";
+      }
+    }
+
+    function checkProfilingAct(isCorrect) {
+      const fb = document.getElementById('act6-feedback');
+      fb.classList.remove('hidden');
+      if (isCorrect) {
+        fb.className = "text-xs font-bold p-2 rounded-lg bg-emerald-100 text-emerald-800";
+        fb.innerText = "🎉 Benar! Rekam jejak menunjukkan minat tinggi pada dunia memasak/resep.";
+      } else {
+        fb.className = "text-xs font-bold p-2 rounded-lg bg-rose-100 text-rose-800";
+        fb.innerText = "💡 Belum tepat. Data pencarian resep mengarah pada minat tata boga.";
+      }
+    }
+
+    function checkDeepfakeAct(isCorrect) {
+      const fb = document.getElementById('act7-feedback');
+      fb.classList.remove('hidden');
+      if (isCorrect) {
+        fb.className = "text-xs font-bold p-2 rounded-lg bg-emerald-100 text-emerald-800";
+        fb.innerText = "🎉 Tepat! Jangan langsung percaya pada media mencurigakan sebelum verifikasi.";
+      } else {
+        fb.className = "text-xs font-bold p-2 rounded-lg bg-rose-100 text-rose-800";
+        fb.innerText = "💡 Belum tepat. Membagikan langsung tanpa cek sumber dapat menyebarkan hoax AI.";
+      }
+    }
+
+    // Answer Reflection in modal
+    function answerReflection(materiId, optionIdx) {
+      const data = materiData[materiId];
+      const opt = data.reflectionOptions[optionIdx];
+      const fb = document.getElementById('modal-reflection-feedback');
+      fb.classList.remove('hidden');
+
+      if (opt.correct) {
+        fb.className = "p-3 rounded-xl text-xs font-bold bg-emerald-100 text-emerald-900 border border-emerald-300";
+        fb.innerText = `🎉 " BENAR! " - ${opt.explanation}`;
+      } else {
+        fb.className = "p-3 rounded-xl text-xs font-bold bg-rose-100 text-rose-900 border border-rose-300";
+        fb.innerText = `💡 " BELUM TEPAT " - ${opt.explanation}`;
+      }
+    }
+
+    // Complete Materi button
+    function markMateriComplete() {
+      if (!currentModalMateriId) return;
+
+      if (!state.completedMateri.includes(currentModalMateriId)) {
+        state.completedMateri.push(currentModalMateriId);
+      }
+
+      // Unlock topic badge
+      const data = materiData[currentModalMateriId];
+      if (data && data.badgeId) {
+        unlockBadge(data.badgeId, data.badgeName);
+      }
+
+      saveLocalStorage();
+      closeMateriModal();
+    }
+
+    
+    function switchChallengeTab(tab) {
+      const mitosContainer = document.getElementById('challenge-mitos-container');
+      const situasiContainer = document.getElementById('challenge-situasi-container');
+      const btnMitos = document.getElementById('tab-btn-mitos');
+      const btnSituasi = document.getElementById('tab-btn-situasi');
+
+      if (tab === 'mitos') {
+        mitosContainer.classList.remove('hidden');
+        situasiContainer.classList.add('hidden');
+        btnMitos.className = "py-3 px-6 text-sm font-bold text-indigo-600 border-b-2 border-indigo-600 focus:outline-none flex items-center gap-2";
+        btnSituasi.className = "py-3 px-6 text-sm font-bold text-slate-500 hover:text-indigo-600 focus:outline-none flex items-center gap-2";
+      } else {
+        mitosContainer.classList.add('hidden');
+        situasiContainer.classList.remove('hidden');
+        btnMitos.className = "py-3 px-6 text-sm font-bold text-slate-500 hover:text-indigo-600 focus:outline-none flex items-center gap-2";
+        btnSituasi.className = "py-3 px-6 text-sm font-bold text-indigo-600 border-b-2 border-indigo-600 focus:outline-none flex items-center gap-2";
+        renderSituasiQuestion();
+      }
+    }
+
+    // Mitos Game Engine
+    function renderMitosQuestion() {
+      const item = mitosDataset[state.mitosCurrentIndex];
+      document.getElementById('mitos-progress-counter').innerText = `Soal ${state.mitosCurrentIndex + 1} dari ${mitosDataset.length}`;
+      document.getElementById('mitos-score-counter').innerText = `Skor: ${state.mitosScore}`;
+      document.getElementById('mitos-statement-text').innerText = item.statement;
+
+      // Reset feedback and buttons
+      document.getElementById('mitos-feedback-box').classList.add('hidden');
+      document.getElementById('mitos-next-btn-container').classList.add('hidden');
+      document.getElementById('mitos-buttons').classList.remove('hidden');
+    }
+
+    function submitMitosAnswer(choice) {
+      const item = mitosDataset[state.mitosCurrentIndex];
+      const isCorrect = (choice === item.answer);
+      const fb = document.getElementById('mitos-feedback-box');
+
+      fb.classList.remove('hidden');
+      document.getElementById('mitos-buttons').classList.add('hidden');
+      document.getElementById('mitos-next-btn-container').classList.remove('hidden');
+
+      if (isCorrect) {
+        state.mitosScore += 5;
+        fb.className = "p-4 rounded-xl border bg-emerald-50 border-emerald-200 text-emerald-900 text-sm space-y-1";
+        fb.innerHTML = `<strong>🎉 BENAR! (+5 Poin)</strong><p>${item.explanation}</p>`;
+      } else {
+        fb.className = "p-4 rounded-xl border bg-rose-50 border-rose-200 text-rose-900 text-sm space-y-1";
+        fb.innerHTML = `<strong>💡 BELUM TEPAT!</strong><p>${item.explanation}</p>`;
+      }
+
+      saveLocalStorage();
+    }
+
+    function nextMitosQuestion() {
+      state.mitosCurrentIndex = (state.mitosCurrentIndex + 1) % mitosDataset.length;
+      renderMitosQuestion();
+    }
+
+    // Situasi Game Engine
+    function renderSituasiQuestion() {
+      const item = situasiDataset[state.situasiCurrentIndex];
+      document.getElementById('situasi-progress-counter').innerText = `Situasi ${state.situasiCurrentIndex + 1} dari ${situasiDataset.length}`;
+      document.getElementById('situasi-title').innerText = item.scenario;
+
+      const optsContainer = document.getElementById('situasi-options');
+      optsContainer.innerHTML = item.options.map((opt, idx) => `
+        <button onclick="submitSituasiAnswer(${idx})" class="w-full text-left p-4 rounded-xl border border-slate-200 bg-white hover:bg-indigo-50/50 transition font-medium text-xs sm:text-sm text-slate-800 flex items-start gap-3">
+          <span class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 font-extrabold flex items-center justify-center text-xs flex-shrink-0">${opt.label}</span>
+          <span>${opt.text}</span>
+        </button>
+      `).join('');
+
+      document.getElementById('situasi-feedback-box').classList.add('hidden');
+      document.getElementById('situasi-next-btn-container').classList.add('hidden');
+    }
+
+    function submitSituasiAnswer(optIdx) {
+      const item = situasiDataset[state.situasiCurrentIndex];
+      const selected = item.options[optIdx];
+      const fb = document.getElementById('situasi-feedback-box');
+
+      fb.classList.remove('hidden');
+      document.getElementById('situasi-next-btn-container').classList.remove('hidden');
+
+      if (selected.correct) {
+        fb.className = "p-5 rounded-xl border bg-emerald-50 border-emerald-200 text-emerald-900 text-sm space-y-2";
+        fb.innerHTML = `<strong class="text-base">🎉 PILIHAN SANGAT BIJAK!</strong><p>${selected.consequence}</p>`;
+      } else {
+        fb.className = "p-5 rounded-xl border bg-rose-50 border-rose-200 text-rose-900 text-sm space-y-2";
+        fb.innerHTML = `<strong class="text-base">💡 PERLU DIPERTIMBANGKAN KEMBALI</strong><p>${selected.consequence}</p>`;
+      }
+    }
+
+    function nextSituasiQuestion() {
+      state.situasiCurrentIndex = (state.situasiCurrentIndex + 1) % situasiDataset.length;
+      renderSituasiQuestion();
+    }
+
+    
+    function renderQuizQuestion() {
+      if (state.quizCurrentIndex >= quiz20Dataset.length) {
+        finishQuiz();
+        return;
+      }
+
+      const q = quiz20Dataset[state.quizCurrentIndex];
+      
+      document.getElementById('quiz-current-num').innerText = `Soal ${q.num}/20`;
+      document.getElementById('quiz-question-category').innerText = `Kategori: ${q.category}`;
+      document.getElementById('quiz-question-difficulty').innerText = q.difficulty;
+      document.getElementById('quiz-question-text').innerText = q.question;
+
+      // Render Options
+      const optsContainer = document.getElementById('quiz-options-container');
+      optsContainer.innerHTML = q.options.map((optText, idx) => `
+        <button id="quiz-opt-btn-${idx}" onclick="selectQuizOption(${idx})" class="quiz-opt-btn w-full text-left p-4 rounded-xl border border-slate-200 bg-white hover:border-indigo-400 hover:bg-slate-50 font-semibold text-xs sm:text-sm text-slate-800 transition flex items-center justify-between">
+          <span>${optText}</span>
+          <i class="fa-regular fa-circle text-slate-300"></i>
+        </button>
+      `).join('');
+
+      // Reset feedback & next button
+      document.getElementById('quiz-feedback-box').classList.add('hidden');
+      const nextBtn = document.getElementById('quiz-next-btn');
+      nextBtn.disabled = true;
+      nextBtn.className = "px-6 py-3 rounded-xl bg-slate-200 text-slate-400 font-extrabold text-sm transition cursor-not-allowed flex items-center gap-2";
+    }
+
+    function selectQuizOption(selectedIdx) {
+      const q = quiz20Dataset[state.quizCurrentIndex];
+      const isCorrect = (selectedIdx === q.correct);
+
+      // Disable all option buttons
+      const btns = document.querySelectorAll('.quiz-opt-btn');
+      btns.forEach((btn, idx) => {
+        btn.onclick = null; // disable further clicks
+        if (idx === q.correct) {
+          btn.className = "w-full text-left p-4 rounded-xl border-2 border-emerald-500 bg-emerald-50 font-bold text-xs sm:text-sm text-emerald-900 flex items-center justify-between";
+          btn.querySelector('i').className = "fa-solid fa-circle-check text-emerald-600 text-lg";
+        } else if (idx === selectedIdx && !isCorrect) {
+          btn.className = "w-full text-left p-4 rounded-xl border-2 border-rose-500 bg-rose-50 font-bold text-xs sm:text-sm text-rose-900 flex items-center justify-between";
+          btn.querySelector('i').className = "fa-solid fa-circle-xmark text-rose-600 text-lg";
+        } else {
+          btn.className = "w-full text-left p-4 rounded-xl border border-slate-200 bg-white opacity-50 font-normal text-xs sm:text-sm text-slate-500 flex items-center justify-between";
+        }
+      });
+
+      // Feedback Box
+      const fbBox = document.getElementById('quiz-feedback-box');
+      const fbTitle = document.getElementById('quiz-feedback-title');
+      const fbExp = document.getElementById('quiz-feedback-explanation');
+      fbBox.classList.remove('hidden');
+
+      if (isCorrect) {
+        fbBox.className = "p-5 rounded-2xl border bg-emerald-50 border-emerald-200 text-emerald-900 space-y-1 transition";
+        fbTitle.innerHTML = `<span class="text-xl">🎉</span> <span>BENAR!</span>`;
+      } else {
+        fbBox.className = "p-5 rounded-2xl border bg-rose-50 border-rose-200 text-rose-900 space-y-1 transition";
+        fbTitle.innerHTML = `<span class="text-xl">💡</span> <span>BELUM TEPAT</span>`;
+      }
+      fbExp.innerText = q.explanation;
+
+      // Record answer
+      state.quizAnswers[state.quizCurrentIndex] = {
+        questionIndex: state.quizCurrentIndex,
+        selectedOption: selectedIdx,
+        isCorrect: isCorrect
+      };
+
+      // Update header correct count
+      const currentCorrect = state.quizAnswers.filter(a => a && a.isCorrect).length;
+      document.getElementById('quiz-correct-count').innerText = currentCorrect;
+
+      // Enable Next button
+      const nextBtn = document.getElementById('quiz-next-btn');
+      nextBtn.disabled = false;
+      nextBtn.className = "px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-sm transition flex items-center gap-2 cursor-pointer shadow-md";
+    }
+
+    function nextQuizQuestion() {
+      state.quizCurrentIndex++;
+      if (state.quizCurrentIndex >= quiz20Dataset.length) {
+        finishQuiz();
+      } else {
+        renderQuizQuestion();
+      }
+    }
+
+    function finishQuiz() {
+      const correctCount = state.quizAnswers.filter(a => a && a.isCorrect).length;
+      const finalScore = Math.round((correctCount / 20) * 100);
+      
+      state.quizScore = finalScore;
+      state.quizCompleted = true;
+
+      // Predicate determination
+      let predicate = "";
+      if (finalScore >= 90) predicate = "🏆 Master Etika Data";
+      else if (finalScore >= 80) predicate = "🌟 Pintar Menggunakan Data";
+      else if (finalScore >= 70) predicate = "👍 Sudah Cukup Baik";
+      else if (finalScore >= 60) predicate = "💪 Terus Berlatih";
+      else predicate = "📚 Ayo Belajar Lagi";
+
+      // Display summary UI
+      document.getElementById('quiz-active-container').classList.add('hidden');
+      document.getElementById('quiz-summary-container').classList.remove('hidden');
+
+      document.getElementById('summary-final-score').innerText = `${finalScore}/100`;
+      document.getElementById('summary-correct-num').innerText = correctCount;
+      document.getElementById('summary-wrong-num').innerText = 20 - correctCount;
+      document.getElementById('summary-predicate').innerText = predicate;
+
+      saveLocalStorage();
+    }
+
+    function restartQuiz() {
+      state.quizCurrentIndex = 0;
+      state.quizAnswers = [];
+      document.getElementById('quiz-correct-count').innerText = "0";
+      document.getElementById('quiz-active-container').classList.remove('hidden');
+      document.getElementById('quiz-summary-container').classList.add('hidden');
+      renderQuizQuestion();
+    }
+
+    
+    const badgesData = [
+      { id: "badge-privasi", name: "Penjaga Privasi", icon: "🔐", desc: "Selesai memahami Privasi Data" },
+      { id: "badge-kebenaran", name: "Data Checker", icon: "✅", desc: "Selesai memahami Kebenaran Data" },
+      { id: "badge-keadilan", name: "Data Fair Player", icon: "⚖️", desc: "Selesai memahami Keadilan Data" },
+      { id: "badge-akuntabilitas", name: "Data Responsible", icon: "🛡️", desc: "Selesai memahami Akuntabilitas" },
+      { id: "badge-sentimen", name: "Sentiment Detective", icon: "💬", desc: "Selesai memahami Analisis Sentimen" },
+      { id: "badge-profiling", name: "Profile Detective", icon: "👤", desc: "Selesai memahami Profiling Data" },
+      { id: "badge-deepfake", name: "Deepfake Detective", icon: "🎭", desc: "Selesai memahami Deepfakes" },
+      { id: "badge-master", name: "DATA ETHICS MASTER", icon: "🏆", desc: "Menyelesaikan seluruh materi + Skor Kuis ≥ 80" }
+    ];
+
+    function unlockBadge(badgeId, badgeName) {
+      if (!state.unlockedBadges.includes(badgeId)) {
+        state.unlockedBadges.push(badgeId);
+        saveLocalStorage();
+      }
+    }
+
+    function renderBadgesGrid() {
+      const container = document.getElementById('badges-grid-container');
+      if (!container) return;
+
+      container.innerHTML = badgesData.map(b => {
+        const isUnlocked = state.unlockedBadges.includes(b.id);
+        return `
+          <div class="bg-white rounded-2xl border ${isUnlocked ? 'border-amber-300 shadow-md' : 'border-slate-200 opacity-60'} p-5 text-center space-y-3 relative overflow-hidden">
+            <div class="w-16 h-16 rounded-2xl ${isUnlocked ? 'bg-amber-100 text-amber-600' : 'bg-slate-100 text-slate-400'} flex items-center justify-center text-3xl mx-auto ${isUnlocked ? 'pulse-glow' : 'badge-locked'}">
+              ${b.icon}
+            </div>
+            <div>
+              <h4 class="font-extrabold text-sm text-slate-800">${b.name}</h4>
+              <p class="text-xs text-slate-500 mt-1">${b.desc}</p>
+            </div>
+            <span class="inline-block px-3 py-0.5 rounded-full text-xs font-extrabold ${isUnlocked ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-500'}">
+              ${isUnlocked ? 'Telah Diraih ✓' : 'Terkunci 🔒'}
+            </span>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function resetAllProgress() {
+      state.completedMateri = [];
+      state.unlockedBadges = [];
+      state.mitosScore = 0;
+      state.quizScore = 0;
+      state.quizCompleted = false;
+      state.quizAnswers = [];
+      state.quizCurrentIndex = 0;
+
+      saveLocalStorage();
+      navigateTo('beranda');
+    }
+
+    window.onload = function() {
+      initLocalStorage();
+      renderMitosQuestion();
+      renderQuizQuestion();
+    };
+
+  </script>
+</body>
+</html>
